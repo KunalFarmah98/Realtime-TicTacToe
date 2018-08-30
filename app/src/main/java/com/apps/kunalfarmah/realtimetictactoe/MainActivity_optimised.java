@@ -28,8 +28,6 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     ImageView i7;
     ImageView i8;
     ImageView i9;
-    ImageView o;
-    ImageView x;
     TextView t1;
     TextView t2;
 
@@ -54,10 +52,16 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         t2 = (TextView) findViewById(R.id.textView2);
 
         if (!pl1.equals("") && !pl2.equals("")) {
-            t1.setText(pl1 + ": X");
-            t2.setText(pl2 + ": O");
+            t1.setText(pl1 + " : X");
+            t2.setText(pl2 + " : O");
         } else if (pl1.equals("") && pl2.equals("")) {
             pl1 = "Player 1";
+            pl2 = "Player 2";
+        }else if(pl1.equals("")&&!pl2.equals("")){
+            pl1 = "Player 1";
+            t2.setText(pl2 + " : O");
+        }else if(!pl1.equals("")&&pl2.equals("")){
+            t1.setText(pl1 + " : X");
             pl2 = "Player 2";
         }
 
@@ -88,7 +92,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void onClick(View view) {              //implementing onClick only once for all buttons by using their IDs
+    public void onClick(View view) {
+        //implementing onClick only once for all buttons by using their IDs
 
         switch (view.getId()) {
 
@@ -222,6 +227,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         }
 
 
+        // in the best case, a player cann win in min 5 turns if he starts first
         if (turns >= 4 && turns <= 8)
             win = winner(pl1, pl2);
 
@@ -238,6 +244,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
             }, 1400);
         }
 
+        // if all turns are done and still no winner, then simply exit saying match drawn and start gameover activity with a delay of 1.4 seconds
         if (turns == 8 && !win) {
             Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
 
@@ -253,8 +260,11 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     }
 
 
+    // function to check teh winning cases after 5th turn
 
     private boolean winner(String pl1, String pl2) {
+
+        // check all rows
 
         if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
             if (moves[0][0] == 0) {
@@ -285,6 +295,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 return true;
             }
         }
+
+        // check all columns
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
             if (moves[0][0] == 0) {
@@ -317,6 +329,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
             }
         }
 
+        // checks first diagonal
+
         if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
             if (moves[0][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
@@ -326,6 +340,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 return true;
             }
         }
+
+        // checks secondary diagonal
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
             if (moves[0][2] == 0) {

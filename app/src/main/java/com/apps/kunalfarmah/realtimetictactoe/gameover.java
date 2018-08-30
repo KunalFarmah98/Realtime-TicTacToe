@@ -21,6 +21,7 @@ public class gameover extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // this function will only close the game over activity and will restart from the main activity
                 finish();
                 System.exit(0);
             }
@@ -30,6 +31,7 @@ public class gameover extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // this function will close the app
                 ActivityCompat.finishAffinity(gameover.this);
                 System.exit(0);
             }
