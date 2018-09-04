@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fragment_containter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:text="SELECT GAME MODE"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="40sp" />
+
+
+    <Button
+        android:id="@+id/offline"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:background="#b322ff"
+        android:text="Offline : 1 Device, 2 Players"
+        android:textColor="#fff2d8"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/online"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="#b322ff"
+        android:text="Realtime : 2 Devices, 2 Players"
+        android:textColor="#fff2d8"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

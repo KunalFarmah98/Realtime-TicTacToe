@@ -268,7 +268,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
 
         if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
             if (moves[0][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (moves[0][0] == 1) {
                 Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();

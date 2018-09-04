@@ -4,30 +4,31 @@
 
     <application
         android:allowBackup="true"
+        android:isGame="true"
         android:label="Realtime tic tac toe"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:isGame="true"
-
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.apps.kunalfarmah.realtimetictactoe.startActivity"
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.EnterActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised"
+        <activity
+            android:name="com.apps.kunalfarmah.realtimetictactoe.startActivity"
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover"
-            android:screenOrientation="portrait">
+        <activity
+            android:name="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.apps.kunalfarmah.realtimetictactoe.gameover"
+            android:screenOrientation="portrait"></activity>
 
-        </activity>
     </application>
 
 </manifest>

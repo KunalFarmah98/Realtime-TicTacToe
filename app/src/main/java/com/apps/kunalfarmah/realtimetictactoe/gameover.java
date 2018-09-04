@@ -41,7 +41,7 @@ public class gameover extends AppCompatActivity {
     }
 
     public void restartActivity(){
-        //finishing current activity and hten restarting it
+        //finishing current activity and then restarting it
         Intent mIntent = getIntent();
         finish();
         startActivity(mIntent);

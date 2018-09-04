@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Host">
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:textSize="30sp"
+            android:text="Remote Token Connection Wizard"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"/>
+
+
+        <EditText
+            android:id="@+id/token"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text"
+            android:layout_marginTop="80dp"
+            android:hint="Enter a Token Number or String"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/Continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:layout_alignStart="@+id/token"
+            android:layout_alignEnd="@+id/token"
+            android:layout_below="@id/token"
+            />
+
+        <TextView
+            android:visibility="gone"
+            android:layout_below="@+id/Continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:text="Code Registered!!
+        Ask your friend to enter ths same code to pair."/>
+
+
+
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>
