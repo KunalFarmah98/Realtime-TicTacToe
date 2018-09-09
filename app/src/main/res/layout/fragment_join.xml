@@ -19,29 +19,29 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:textSize="30sp"
-            android:text="Remote Token Connection Wizard"
+            android:text="Remote token Connection Wizard"
             android:background="@color/colorPrimaryDark"
             android:textColor="#ffffff"/>
 
 
         <EditText
-            android:id="@+id/token"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/token1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text"
-            android:layout_marginTop="80dp"
-            android:hint="Enter the Registered Token Number"
-            android:textColor="#ffffff"/>
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="154dp"
+            android:hint="Enter the Registered token1 Number"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PLAY"
-            android:layout_alignStart="@+id/token"
-            android:layout_alignEnd="@+id/token"
-            android:layout_below="@id/token"
+            android:layout_alignStart="@+id/token1"
+            android:layout_alignEnd="@+id/token1"
+            android:layout_below="@id/token1"
             />
 
 
