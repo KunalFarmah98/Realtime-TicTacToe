@@ -73,18 +73,20 @@ TextView hidden2;
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
 
+                        try {
+                            String value = (String) dataSnapshot.getValue();
+                            //  as soon as friend has paired, start the game
 
-                          String value = (String) dataSnapshot.getValue();
-                          //  as soon as friend has paired, start the game
+                            // if code is changed, start the game
+                            if (value.equals("Play")) {
+                                Intent start = new Intent(getContext(), onlineActivity.class);
+                                start.putExtra("isHost", "True");
+                                startActivity(start);
+                            }
 
-                        // if code is changed, start the game
-                        if(value.equals("Play")){
-                            Intent start = new Intent(getContext(),onlineActivity.class);
-                                    start.putExtra("isHost","True");
-                            startActivity(start);
+
+                        } catch (Exception e) {
                         }
-
-
                     }
 
                     @Override

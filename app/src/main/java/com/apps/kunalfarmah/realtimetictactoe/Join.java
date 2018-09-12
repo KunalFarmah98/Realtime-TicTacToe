@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
  * A simple {@link Fragment} subclass.
  */
 public class Join extends Fragment {
+    
 
     FirebaseDatabase mDatabase;
     DatabaseReference mref;
@@ -77,7 +78,7 @@ public class Join extends Fragment {
                                 start.putExtra("isHost","False");
 
                                 startActivity(start);
-                            } else {
+                            } else if(!token.getText().toString().equals(value) && !value.equalsIgnoreCase("Play")){
                                 Toast.makeText(getContext(), "Please Enter Correct Code", Toast.LENGTH_SHORT).show();
                             }
                             //Log.d(TAG, "Value is: " + value);

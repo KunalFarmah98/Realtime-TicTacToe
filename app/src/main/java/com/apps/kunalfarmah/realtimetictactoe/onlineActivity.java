@@ -23,7 +23,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
     int moves[][] = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
-
     ImageView i1;
     ImageView i2;
     ImageView i3;
@@ -47,6 +46,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     // reference for the turns
     DatabaseReference turn;
 
+    // a reference to a victory
+    DatabaseReference iswin;
+
     ChildEventListener movelistener;
 
     boolean host_turn;
@@ -61,6 +63,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_main);
 
 
+
+
+
         // finding which one is host;
         ishost = getIntent().getSerializableExtra("isHost").toString();
 
@@ -68,6 +73,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         mdata = FirebaseDatabase.getInstance();
         turn = mdata.getReference("Host");
         turn.setValue(true);
+
+        iswin = mdata.getReference("Win");
+        iswin.setValue(" ");
 
 
         i1 = (ImageView) findViewById(R.id.imageView1);
@@ -79,6 +87,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         i7 = (ImageView) findViewById(R.id.imageView7);
         i8 = (ImageView) findViewById(R.id.imageView8);
         i9 = (ImageView) findViewById(R.id.imageView9);
+
 
 
 
@@ -341,12 +350,119 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                             //  moves[2][2] = 1;
                         }
                         break;
+
+                        default:
+                            break;
                 }
             }
 
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                // Get imgbox object and use the values to update the UI with either o or x
+
+
+                imagesbox val = dataSnapshot.getValue(imagesbox.class);
+
+                int o_or_x = val.value;
+
+                switch (val.imgvw) {
+                    case 1:
+                        if (o_or_x == 0) {
+                            i1.setImageResource(R.drawable.o);
+                            //moves[0][0] = 0;
+                        } else {
+                            i1.setImageResource(R.drawable.x);
+                            // moves[0][0] = 1;
+                        }
+
+                        i1.setEnabled(false);
+                        break;
+                    case 2:
+                        if (o_or_x == 0) {
+                            i2.setImageResource(R.drawable.o);
+                            // moves[0][1] = 0;
+                        } else {
+                            i2.setImageResource(R.drawable.x);
+                            //   moves[0][1] = 1;
+                        }
+                        i2.setEnabled(false);
+                        break;
+                    case 3:
+                        if (o_or_x == 0) {
+                            i3.setImageResource(R.drawable.o);
+                            //  moves[0][2] = 0;
+                        } else {
+                            i3.setImageResource(R.drawable.x);
+                            // moves[0][2] = 1;
+                        }
+                        i3.setEnabled(false);
+                        break;
+                    case 4:
+                        if (o_or_x == 0) {
+                            i4.setImageResource(R.drawable.o);
+                            //  moves[1][0] = 0;
+                        } else {
+                            i4.setImageResource(R.drawable.x);
+                            //  moves[1][0] = 1;
+                        }
+                        i4.setEnabled(false);
+                        break;
+                    case 5:
+                        if (o_or_x == 0) {
+                            i5.setImageResource(R.drawable.o);
+                            //  moves[1][1] = 0;
+                        } else {
+                            i5.setImageResource(R.drawable.x);
+                            //  moves[1][1] = 1;
+                        }
+                        i5.setEnabled(false);
+                        break;
+                    case 6:
+                        if (o_or_x == 0) {
+                            i6.setImageResource(R.drawable.o);
+                            //  moves[1][2] = 0;
+                        } else {
+                            i6.setImageResource(R.drawable.x);
+                            //  moves[1][2] = 1;
+                        }
+                        i6.setEnabled(false);
+                        break;
+                    case 7:
+                        if (o_or_x == 0) {
+                            i7.setImageResource(R.drawable.o);
+                            //   moves[2][0] = 0;
+                        } else {
+                            i7.setImageResource(R.drawable.x);
+                            //   moves[2][0] = 1;
+                        }
+                        i7.setEnabled(false);
+                        break;
+                    case 8:
+                        if (o_or_x == 0) {
+                            i8.setImageResource(R.drawable.o);
+                            //  moves[2][1] = 0;
+                        } else {
+                            i8.setImageResource(R.drawable.x);
+                            //   moves[2][1] = 1;
+                        }
+                        i8.setEnabled(false);
+                        break;
+                    case 9:
+                        if (o_or_x == 0) {
+                            i9.setImageResource(R.drawable.o);
+                            //  moves[2][2] = 0;
+                        } else {
+                            i9.setImageResource(R.drawable.x);
+                            //  moves[2][2] = 1;
+                        }
+                        i9.setEnabled(false);
+                        break;
+
+                    default:
+                        break;
+                }
 
 
             }
@@ -368,6 +484,64 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         };
 
 
+        iswin.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                try {
+                    String winner = dataSnapshot.getValue(String.class);
+                    if (winner.equalsIgnoreCase("Host")) {
+                        Toast.makeText(getApplicationContext(), "Host Wins", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+                                gameover.putExtra("isHost", ishost);
+                                startActivity(gameover);
+                            }
+                        }, 1400);
+                    } else if (winner.equalsIgnoreCase("Away")) {
+                        Toast.makeText(getApplicationContext(), "Away Wins", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+                                gameover.putExtra("isHost", ishost);
+                                startActivity(gameover);
+                            }
+                        }, 1400);
+                    } else if (winner.equalsIgnoreCase("Draw")) {
+                        Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+                                gameover.putExtra("isHost", ishost);
+                                startActivity(gameover);
+                            }
+                        }, 1400);
+                    }
+
+
+                } catch (Exception e) {
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        ref = mdata.getReference("Moves");
+        ref.addChildEventListener(movelistener);
+
+
 
     }
 
@@ -375,11 +549,11 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
 
+       // ref.addChildEventListener(movelistener);
 
 
-        mdata = FirebaseDatabase.getInstance();
-        ref = mdata.getReference("Moves");
-        ref.addChildEventListener(movelistener);
+       // mdata = FirebaseDatabase.getInstance();
+
 
         //implementing onClick only once for all buttons by using their IDs
 
@@ -620,40 +794,158 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        if(steps>=5)
+
+// one player needs min 3 moves to win
+        if(steps>=3)
         {
             win = winner(pl1,pl2);
         }
 
         if (win) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
 
-                    Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover.class);
-                    startActivity(gameover);
-                }
-            }, 1400);
+            if (ishost.equalsIgnoreCase("True"))
+
+                iswin.setValue("Host");
+
+            else
+
+                iswin.setValue("Away");
+
         }
 
+
+
         // if all turns are done and still no winner, then simply exit saying match drawn and start gameover activity with a delay of 1.4 seconds
-        if (steps == 9 && !win) {
-            Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
+        if (steps >=5 && !win) {
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            iswin.setValue("Draw");
 
-                    Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover.class);
-                    startActivity(gameover);
-                }
-            }, 1400);
         }
     }
 
 
 
 
+
+
+
+
+    // function to check teh winning cases after 5th turn
+
+    private boolean winner(String pl1, String pl2) {
+
+        // check all rows
+
+        if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
+            if (moves[0][0] == 0) {
+               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (moves[0][0] == 1) {
+              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        if (moves[1][0] != -1 && moves[1][0] == moves[1][1] && moves[1][1] == moves[1][2]) {
+            if (moves[1][0] == 0) {
+              //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[1][0] == 1) {
+             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        if (moves[2][0] != -1 && moves[2][0] == moves[2][1] && moves[2][1] == moves[2][2]) {
+            if (moves[2][0] == 0) {
+             //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[2][0] == 1) {
+             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        // check all columns
+
+        if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
+            if (moves[0][0] == 0) {
+               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[0][0] == 1) {
+              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+
+        if (moves[0][1] != -1 && moves[0][1] == moves[1][1] && moves[1][1] == moves[2][1]) {
+            if (moves[0][1] == 0) {
+               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[0][1] == 1) {
+              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        if (moves[0][2] != -1 && moves[0][2] == moves[1][2] && moves[1][2] == moves[2][2]) {
+            if (moves[0][2] == 0) {
+               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[0][2] == 1) {
+              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        // checks first diagonal
+
+        if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
+            if (moves[0][0] == 0) {
+              //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[0][0] == 1) {
+              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        // checks secondary diagonal
+
+        if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
+            if (moves[0][2] == 0) {
+             //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (moves[0][2] == 1) {
+             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        }
+
+        return  false;
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // resetting the database as -1 when game finishes
+
+        ref.removeEventListener(movelistener);
+        iswin.removeValue();
+
+        setDefaults();
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mdata.goOffline();
+    }
 
     private void settingclicklisteners(){
         i1.setOnClickListener(this);
@@ -667,100 +959,17 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         i9.setOnClickListener(this);
     }
 
-
-    // function to check teh winning cases after 5th turn
-
-    private boolean winner(String pl1, String pl2) {
-
-        // check all rows
-
-        if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
-            if (moves[0][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
-                return true;
-            } else if (moves[0][0] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        if (moves[1][0] != -1 && moves[1][0] == moves[1][1] && moves[1][1] == moves[1][2]) {
-            if (moves[1][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[1][0] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        if (moves[2][0] != -1 && moves[2][0] == moves[2][1] && moves[2][1] == moves[2][2]) {
-            if (moves[2][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[2][0] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        // check all columns
-
-        if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
-            if (moves[0][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[0][0] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-
-        if (moves[0][1] != -1 && moves[0][1] == moves[1][1] && moves[1][1] == moves[2][1]) {
-            if (moves[0][1] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[0][1] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        if (moves[0][2] != -1 && moves[0][2] == moves[1][2] && moves[1][2] == moves[2][2]) {
-            if (moves[0][2] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[0][2] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        // checks first diagonal
-
-        if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
-            if (moves[0][0] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[0][0] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        // checks secondary diagonal
-
-        if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
-            if (moves[0][2] == 0) {
-                Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            } else if (moves[0][2] == 1) {
-                Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        }
-
-        return  false;
+    void setDefaults(){
+        imagesbox defaultvals = new imagesbox(-1,-1);
+        ref.getDatabase().getReference("Moves");
+        ref.child("img1").setValue(defaultvals);
+        ref.child("img2").setValue(defaultvals);
+        ref.child("img3").setValue(defaultvals);
+        ref.child("img4").setValue(defaultvals);
+        ref.child("img5").setValue(defaultvals);
+        ref.child("img6").setValue(defaultvals);
+        ref.child("img7").setValue(defaultvals);
+        ref.child("img8").setValue(defaultvals);
+        ref.child("img9").setValue(defaultvals);
     }
 }

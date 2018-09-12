@@ -20,14 +20,15 @@
         </activity>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.startActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.gameover"
             android:screenOrientation="portrait" />
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity"></activity>
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity" />
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"></activity>
     </application>
 
 </manifest>
