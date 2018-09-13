@@ -9,15 +9,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class onlineActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,8 +41,15 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     ImageView i8;
     ImageView i9;
 
-    String pl1 = "Player 1";
-    String pl2 ="Player 2";
+    TextView player1;
+    TextView player2;
+
+    ImageView hosticon;
+    ImageView awayicon;
+
+
+    String pl1 = "Host : X";
+    String pl2 ="Away : O";
 
     String ishost = "";
     // String turn="";
@@ -62,10 +77,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
         // finding which one is host;
         ishost = getIntent().getSerializableExtra("isHost").toString();
 
@@ -88,6 +99,16 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         i8 = (ImageView) findViewById(R.id.imageView8);
         i9 = (ImageView) findViewById(R.id.imageView9);
 
+        hosticon = findViewById(R.id.host);
+        awayicon = findViewById(R.id.away);
+
+        player1 = findViewById(R.id.textView);
+        player2 = findViewById(R.id.textView2);
+
+
+        player1.setText(pl1);
+        player2.setText(pl2);
+
 
 
 
@@ -106,6 +127,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                 // if its host device and hosts turn , disable all the already set values
 
                 if (ishost.equalsIgnoreCase("True") && hostTurn) {
+
+                    awayicon.setVisibility(View.INVISIBLE);
+                    hosticon.setVisibility(View.VISIBLE);
 
 //                    i1.setClickable(true);
 //                    i2.setClickable(true);
@@ -152,6 +176,10 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                 // if it is host device and aways turn disable all clicks for host
                 if (ishost.equalsIgnoreCase("True") && !hostTurn) {
+
+                    awayicon.setVisibility(View.VISIBLE);
+                    hosticon.setVisibility(View.INVISIBLE);
+
                     settingclicklisteners();
                     i1.setClickable(false);
                     i2.setClickable(false);
@@ -171,6 +199,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                 // if it is away device and away turn, disable all the already clicked values
 
                 if (!ishost.equalsIgnoreCase("True") && !hostTurn) {
+
+                    awayicon.setVisibility(View.VISIBLE);
+                    hosticon.setVisibility(View.INVISIBLE);
 
 //                    i1.setClickable(true);
 //                    i2.setClickable(true);
@@ -220,6 +251,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                 // if it is away device and host turn, disable all clicks for away
 
                 if (!ishost.equalsIgnoreCase("True") && hostTurn) {
+
+                    awayicon.setVisibility(View.INVISIBLE);
+                    hosticon.setVisibility(View.VISIBLE);
 
                     settingclicklisteners();
 
@@ -545,6 +579,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+
+
+
     @Override
     public void onClick(View v) {
 
@@ -802,6 +839,16 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (win) {
+
+            i1.setClickable(false);
+            i2.setClickable(false);
+            i3.setClickable(false);
+            i4.setClickable(false);
+            i5.setClickable(false);
+            i6.setClickable(false);
+            i7.setClickable(false);
+            i8.setClickable(false);
+            i9.setClickable(false);
 
             if (ishost.equalsIgnoreCase("True"))
 

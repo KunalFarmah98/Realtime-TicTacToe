@@ -7,6 +7,7 @@
     android:background="#00bfff"
     tools:context="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised">
 
+
     <LinearLayout
         android:id="@+id/score"
         android:layout_width="match_parent"
@@ -24,6 +25,16 @@
             android:textAlignment="center"
             android:textSize="20dp" />
 
+        <ImageView
+            android:id="@+id/host"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/turn"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"/>
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -32,7 +43,18 @@
             android:text="Player 2 : O"
             android:textAlignment="center"
             android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/away"
+            android:layout_width="20dp"
+            android:layout_gravity="center"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:src="@drawable/turn"
+            android:background="@color/colorAccent"/>
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/grid1"
@@ -85,6 +107,8 @@
     </LinearLayout>
 
 
+
+
     <View
         android:id="@+id/gridline1"
         android:layout_width="match_parent"
@@ -94,6 +118,19 @@
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="#0000ff" />
+
+    <View
+        android:id="@+id/win1"
+        android:layout_width="365dp"
+        android:layout_height="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="119dp"
         android:background="#0000ff" />
 
     <LinearLayout
@@ -155,6 +192,19 @@
         android:layout_gravity="center"
         android:background="#0000ff" />
 
+    <View
+        android:id="@+id/win2"
+        android:layout_width="365dp"
+        android:layout_height="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="224dp"
+        android:background="#0000ff" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -202,6 +252,19 @@
             app:srcCompat="@color/colorAccent" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/win3"
+        android:layout_width="365dp"
+        android:layout_height="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="177dp"
+        android:background="#0000ff" />
+
 
     <!--<ImageView-->
         <!--android:id="@+id/testo"-->
@@ -223,6 +286,115 @@
         <!--android:layout_marginStart="74dp"-->
         <!--android:src="@drawable/x"-->
         <!--android:visibility="invisible" />-->
+
+    <View
+        android:id="@+id/ver1"
+    android:layout_width="7dp"
+    android:layout_height="310dp"
+    android:layout_gravity="center"
+    android:layout_marginLeft="65dp"
+        android:visibility="gone"
+    android:layout_marginTop="75sp"
+    android:background="#0000ff" />
+
+    <View
+        android:id="@+id/ver2"
+        android:layout_toRightOf="@id/ver1"
+        android:layout_width="7dp"
+        android:layout_height="310dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="75sp"
+        android:visibility="gone"
+        android:background="#0000ff" />
+
+    <View
+        android:id="@+id/ver3"
+        android:layout_toRightOf="@+id/ver2"
+        android:layout_width="7dp"
+        android:layout_height="310dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="120dp"
+        android:visibility="gone"
+        android:layout_marginTop="75sp"
+        android:background="#0000ff" />
+
+
+    <View
+        android:id="@+id/diag02"
+        android:layout_width="140dp"
+        android:layout_height="7dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="176dp"
+        android:visibility="invisible"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="40" />
+
+    <View
+        android:id="@+id/diag01"
+        android:layout_width="160dp"
+        android:layout_height="7dp"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="224dp"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="40" />
+
+    <View
+        android:id="@+id/diag10"
+        android:layout_width="160dp"
+        android:layout_height="7dp"
+        android:visibility="invisible"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/diag00"
+        android:layout_gravity="center"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="-40" />
+
+    <View
+        android:id="@+id/diag12"
+        android:layout_width="140dp"
+        android:layout_height="7dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/diag02"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="-40" />
+
+    <View
+        android:id="@+id/diag11"
+        android:layout_width="160dp"
+        android:layout_height="7dp"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="224dp"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="-40" />
+
+    <View
+        android:id="@+id/diag00"
+        android:layout_width="160dp"
+        android:layout_height="7dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:layout_marginTop="127dp"
+        android:background="#0000ff"
+        android:foregroundGravity="center"
+        android:rotation="40" />
 
 
 </RelativeLayout>

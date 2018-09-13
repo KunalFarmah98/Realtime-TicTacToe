@@ -18,6 +18,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     int turns = -1;
     boolean win = false;
 
+    ImageView hosticon;
+    ImageView awayicon;
 
     ImageView i1;
     ImageView i2;
@@ -30,6 +32,23 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     ImageView i9;
     TextView t1;
     TextView t2;
+
+
+    View win1;
+    View win2;
+    View win3;
+
+    View ver1;
+    View ver2;
+    View ver3;
+
+    View diag00;
+    View diag01;
+    View diag02;
+    View diag10;
+    View diag11;
+    View diag12;
+
 
     String pl1;
     String pl2;
@@ -65,6 +84,11 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
             pl2 = "Player 2";
         }
 
+        hosticon = findViewById(R.id.host);
+        hosticon.setVisibility(View.VISIBLE);
+        awayicon = findViewById(R.id.away);
+        awayicon.setVisibility(View.INVISIBLE);
+
         i1 = (ImageView) findViewById(R.id.imageView1);
         i2 = (ImageView) findViewById(R.id.imageView2);
         i3 = (ImageView) findViewById(R.id.imageView3);
@@ -74,6 +98,25 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         i7 = (ImageView) findViewById(R.id.imageView7);
         i8 = (ImageView) findViewById(R.id.imageView8);
         i9 = (ImageView) findViewById(R.id.imageView9);
+
+
+        win1=  findViewById(R.id.win1);
+        win2=  findViewById(R.id.win2);
+        win3=  findViewById(R.id.win3);
+
+        ver1 = findViewById(R.id.ver1);
+        ver2 = findViewById(R.id.ver2);
+        ver3 = findViewById(R.id.ver3);
+
+        diag00 = findViewById(R.id.diag00);
+        diag01 = findViewById(R.id.diag01);
+        diag02 = findViewById(R.id.diag02);
+
+        diag10 = findViewById(R.id.diag10);
+        diag11 = findViewById(R.id.diag11);
+        diag12 = findViewById(R.id.diag12);
+
+
 
         Toast.makeText(getApplicationContext(), pl1 + " Goes first", Toast.LENGTH_SHORT).show();
 
@@ -95,11 +138,26 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     public void onClick(View view) {
         //implementing onClick only once for all buttons by using their IDs
 
+        ++turns;
+
+        if(turns%2!=0){
+
+            awayicon.setVisibility(View.INVISIBLE);
+            hosticon.setVisibility(View.VISIBLE);
+
+        }
+
+        else{
+            awayicon.setVisibility(View.VISIBLE);
+            hosticon.setVisibility(View.INVISIBLE);
+
+        }
+
         switch (view.getId()) {
 
             case R.id.imageView1:
 
-                ++turns;
+
                 if (turns % 2 == 0) {
                     i1.setImageResource(R.drawable.x);
 
@@ -115,7 +173,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
 
             case R.id.imageView2:
 
-                ++turns;
+                //++turns;
                 if (turns % 2 == 0) {
                     i2.setImageResource(R.drawable.x);
 
@@ -130,7 +188,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView3:
-                ++turns;
+               // ++turns;
                 if (turns % 2 == 0) {
                     i3.setImageResource(R.drawable.x);
 
@@ -144,7 +202,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView4:
-                ++turns;
+             //   ++turns;
                 if (turns % 2 == 0) {
                     i4.setImageResource(R.drawable.x);
 
@@ -157,7 +215,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView5:
-                ++turns;
+              //  ++turns;
                 if (turns % 2 == 0) {
                     i5.setImageResource(R.drawable.x);
 
@@ -170,7 +228,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView6:
-                ++turns;
+             //   ++turns;
                 if (turns % 2 == 0) {
                     i6.setImageResource(R.drawable.x);
 
@@ -184,7 +242,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView7:
-                ++turns;
+             //   ++turns;
                 if (turns % 2 == 0) {
                     i7.setImageResource(R.drawable.x);
 
@@ -198,7 +256,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView8:
-                ++turns;
+            //    ++turns;
                 if (turns % 2 == 0) {
                     i8.setImageResource(R.drawable.x);
 
@@ -211,7 +269,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 break;
 
             case R.id.imageView9:
-                ++turns;
+             //   ++turns;
                 if (turns % 2 == 0) {
                     i9.setImageResource(R.drawable.x);
 
@@ -234,6 +292,17 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         // if a player wins, start gameover activity with a delay of 1.4 seconds
 
         if (win) {
+
+            i1.setClickable(false);
+            i2.setClickable(false);
+            i3.setClickable(false);
+            i4.setClickable(false);
+            i5.setClickable(false);
+            i6.setClickable(false);
+            i7.setClickable(false);
+            i8.setClickable(false);
+            i9.setClickable(false);
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -267,6 +336,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         // check all rows
 
         if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
+           // win1.setVisibility(View.VISIBLE);
             if (moves[0][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
                 return true;
@@ -274,9 +344,13 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
+
+
         }
 
         if (moves[1][0] != -1 && moves[1][0] == moves[1][1] && moves[1][1] == moves[1][2]) {
+          //  win2.setVisibility(View.VISIBLE);
+
             if (moves[1][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -284,9 +358,12 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
+
         }
 
         if (moves[2][0] != -1 && moves[2][0] == moves[2][1] && moves[2][1] == moves[2][2]) {
+           // win3.setVisibility(View.VISIBLE);
+
             if (moves[2][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -299,6 +376,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         // check all columns
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
+           // ver1.setVisibility(View.VISIBLE);
+
             if (moves[0][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -310,6 +389,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
 
 
         if (moves[0][1] != -1 && moves[0][1] == moves[1][1] && moves[1][1] == moves[2][1]) {
+          //  ver2.setVisibility(View.VISIBLE);
+
             if (moves[0][1] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -320,6 +401,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         }
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][2] && moves[1][2] == moves[2][2]) {
+          //  ver3.setVisibility(View.VISIBLE);
+
             if (moves[0][2] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -332,6 +415,11 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         // checks first diagonal
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
+
+//            diag00.setVisibility(View.VISIBLE);
+//            diag01.setVisibility(View.VISIBLE);
+//            diag02.setVisibility(View.VISIBLE);
+
             if (moves[0][0] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -339,11 +427,17 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
+
         }
 
         // checks secondary diagonal
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
+
+//            diag10.setVisibility(View.VISIBLE);
+//            diag11.setVisibility(View.VISIBLE);
+//            diag12.setVisibility(View.VISIBLE);
+
             if (moves[0][2] == 0) {
                 Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
@@ -351,6 +445,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
+
+
         }
 
             return  false;

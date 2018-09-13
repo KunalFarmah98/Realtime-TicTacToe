@@ -28,7 +28,9 @@ public class startActivity extends AppCompatActivity implements Serializable {
         i1 = (ImageButton) findViewById(R.id.gobutton);
 
         e1 = (EditText) findViewById(R.id.player1);
+        e1.setMaxLines(2);
         e2 = (EditText) findViewById(R.id.player2);
+        e2.setMaxLines(2);
 
         i1.setOnClickListener(new View.OnClickListener() {
 
