@@ -5,6 +5,7 @@
     android:background="@color/colorAccent"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:id="@+id/fragment_containter"
         android:layout_width="match_parent"

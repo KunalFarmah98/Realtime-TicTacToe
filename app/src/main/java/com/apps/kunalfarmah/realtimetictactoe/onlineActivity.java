@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,6 +65,11 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     // a reference to a victory
     DatabaseReference iswin;
 
+    //a reference to detect loss in connection
+    DatabaseReference connectedRef;
+
+    DatabaseReference lostConnection;
+
     ChildEventListener movelistener;
 
     boolean host_turn;
@@ -87,6 +93,32 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         iswin = mdata.getReference("Win");
         iswin.setValue(" ");
+
+        lostConnection = mdata.getReference("connection_lost");
+        lostConnection.setValue(false);
+        //lostConnection.setValue(false);
+
+        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    // System.out.println("connected");
+                } else {
+                    lostConnection.setValue(true);
+                    Toast.makeText(getApplicationContext(),"Lost",Toast.LENGTH_SHORT).show();
+
+                    //  finish();
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
 
 
         i1 = (ImageView) findViewById(R.id.imageView1);
@@ -570,6 +602,37 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
             }
         });
+
+
+
+//TODO
+
+        lostConnection.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                try {
+                    boolean val = dataSnapshot.getValue(Boolean.class);
+
+                    if (val) {
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Lost Connection to the other Player", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // else{}
+
+                } catch(Exception e){}
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
 
         ref = mdata.getReference("Moves");

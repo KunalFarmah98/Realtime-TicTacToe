@@ -1,9 +1,18 @@
 package com.apps.kunalfarmah.realtimetictactoe;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.StrictMode;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -15,6 +24,9 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,9 +35,44 @@ public class EnterActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     Button offline;
     Button online;
+    // a variable to check if we are inside teh host or join screen
     FrameLayout fragments;
     static String User;
 
+    AboutMe about = new AboutMe();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.signout:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(getApplicationContext(),"Signed Out Successfully!!",Toast.LENGTH_SHORT).show();
+
+                // removing all fragments after sign in
+                for(int i=0; i<getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                    getSupportFragmentManager().popBackStack();
+                }
+
+                // if a fragemnt was open during sign out, remove it
+                if(fragments.getVisibility()==View.VISIBLE)
+                    fragments.setVisibility(View.GONE);
+
+                return true;
+
+            case R.id.about_dev:
+                if(fragments.getVisibility()==View.GONE || fragments.getVisibility()==View.INVISIBLE)
+                    fragments.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,about).addToBackStack("about").commit();
+        default: return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,31 +100,57 @@ public class EnterActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Interstitial interstitial = new Interstitial();
-                fragments.setVisibility(View.VISIBLE);
+                if (hasActiveInternetConnection(getApplicationContext())) {
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).commit();
+                    Interstitial interstitial = new Interstitial();
+                    fragments.setVisibility(View.VISIBLE);
 
-                // Choose authentication providers
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.PhoneBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, interstitial).addToBackStack("Interstitial").commit();
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // if user is logged in continue
+                    if (user != null) {
+                        Toast.makeText(getApplicationContext(), "Signed In", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        // Choose authentication providers if user is not logged in
+                        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                                new AuthUI.IdpConfig.EmailBuilder().build(),
+                                new AuthUI.IdpConfig.PhoneBuilder().build(),
+                                new AuthUI.IdpConfig.GoogleBuilder().build());
 
 // Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setLogo(R.drawable.logo)
-                                .build(),
-                        RC_SIGN_IN);
+                        startActivityForResult(
+                                AuthUI.getInstance()
+                                        .createSignInIntentBuilder()
+                                        .setAvailableProviders(providers)
+                                        .setLogo(R.drawable.logo)
+                                        .build(),
+                                RC_SIGN_IN);
 
 
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Please connect your device to the internet to continue :)", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
 
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // removing the fragment if back is pressed on the host or join screen
+
+        if(getSupportFragmentManager().getBackStackEntryCount()==0)
+        fragments.setVisibility(View.GONE);
+        else{}
+            //fragments.setVisibility(View.VISIBLE);
 
     }
 
@@ -97,9 +170,9 @@ public class EnterActivity extends AppCompatActivity {
                catch (Exception e){}
 
                 if (user != null) {
-                    Toast.makeText(getApplicationContext(), "Signed In", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Signed In Successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(),"Please Sign",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Please Sign In",Toast.LENGTH_SHORT).show();
 
                     // Choose authentication providers
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -112,7 +185,7 @@ public class EnterActivity extends AppCompatActivity {
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
                                     .setAvailableProviders(providers)
-                                    .setIsSmartLockEnabled(true)
+                                    //.setIsSmartLockEnabled(true)
                                     .setLogo(R.drawable.logo)
                                     .build(),
                             RC_SIGN_IN);
@@ -123,27 +196,65 @@ public class EnterActivity extends AppCompatActivity {
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
-
-                Toast.makeText(getApplicationContext(), "Please Sign to Continue", Toast.LENGTH_SHORT).show();
-
-                // Choose authentication providers
-                List<AuthUI.IdpConfig> providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.PhoneBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build());
-
-// Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setIsSmartLockEnabled(true)
-                                .setLogo(R.drawable.logo)
-                                .build(),
-                        RC_SIGN_IN);
+//
+//                Toast.makeText(getApplicationContext(), "Please Sign to Continue", Toast.LENGTH_SHORT).show();
+//
+//                // Choose authentication providers
+//                List<AuthUI.IdpConfig> providers = Arrays.asList(
+//                        new AuthUI.IdpConfig.EmailBuilder().build(),
+//                        new AuthUI.IdpConfig.PhoneBuilder().build(),
+//                        new AuthUI.IdpConfig.GoogleBuilder().build());
+//
+//// Create and launch sign-in intent
+//                startActivityForResult(
+//                        AuthUI.getInstance()
+//                                .createSignInIntentBuilder()
+//                                .setAvailableProviders(providers)
+//                                .setIsSmartLockEnabled(true)
+//                                .setLogo(R.drawable.logo)
+//                                .build(),
+//                        RC_SIGN_IN);
             }
         }
     }
+
+
+    // checks if it is connceted to a network
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    // this checks if connection has internet access
+
+    public boolean hasActiveInternetConnection(Context context) {
+        if (isNetworkAvailable()) {
+
+            // forcefully using network on main threaad
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+               // Log.e(LOG_TAG, "Error checking internet connection", e);
+            }
+        } else {
+            //Log.d(LOG_TAG, "No network available!");
+        }
+        return false;
+    }
+
+
+
 }
 
 

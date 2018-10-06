@@ -70,6 +70,19 @@
             android:textAlignment="center"
             android:text=" Ask your friend to enter ths same code to pair."/>
 
+        <TextView
+            android:id="@+id/hidden3"
+            android:visibility="gone"
+            android:layout_below="@+id/Continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:text="Invalid Token Code !!!"/>
+
+
 
 
 

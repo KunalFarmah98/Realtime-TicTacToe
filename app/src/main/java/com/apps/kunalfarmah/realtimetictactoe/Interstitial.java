@@ -54,6 +54,7 @@ public class Interstitial extends Fragment {
             @Override
             public void onClick(View v) {
 
+
                 Join join = new Join();
                 act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,join).addToBackStack("join").commit();
             }
@@ -71,4 +72,5 @@ public class Interstitial extends Fragment {
         super.onAttach(activity);
         act = (EnterActivity)activity;
     }
+
 }

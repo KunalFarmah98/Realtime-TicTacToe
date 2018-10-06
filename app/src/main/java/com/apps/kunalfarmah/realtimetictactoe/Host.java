@@ -35,6 +35,7 @@ Button Continue;
 
 TextView hidden1;
 TextView hidden2;
+TextView hidden3;
 
     public Host() {
         // Required empty public constructor
@@ -49,52 +50,60 @@ TextView hidden2;
         Continue = v.findViewById(R.id.Continue);
         hidden1 = v.findViewById(R.id.hidden1);
         hidden2=v.findViewById(R.id.hidden2);
+        hidden3=v.findViewById(R.id.hidden3);
         //final String val = token.getText().toString();
+
 
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDatabase = FirebaseDatabase.getInstance();
                 // storing the token in the db
-                mref =mDatabase.getReference().child("Code");
-                mref.getDatabase().getReference("Code").setValue(token.getText().toString());
-                hidden1.setVisibility(View.VISIBLE);
-                hidden2.setVisibility(View.VISIBLE);
+                mref = mDatabase.getReference().child("Code");
 
-                //  waiting for game to start
+                if (token.getText().toString().equals("")) {
+                    hidden3.setVisibility(View.VISIBLE);
+                } else {
+                    mref.getDatabase().getReference("Code").setValue(token.getText().toString());
+                    hidden3.setVisibility(View.GONE);
+                    hidden1.setVisibility(View.VISIBLE);
+                    hidden2.setVisibility(View.VISIBLE);
 
-                mref.getDatabase().getReference("Code");
+                    //  waiting for game to start
 
-                // settign the referance to the Game
+                    mref.getDatabase().getReference("Code");
 
-                mref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
+                    // settign the referance to the Game
 
-                        try {
-                            String value = (String) dataSnapshot.getValue();
-                            //  as soon as friend has paired, start the game
+                    mref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
 
-                            // if code is changed, start the game
-                            if (value.equals("Play")) {
-                                Intent start = new Intent(getContext(), onlineActivity.class);
-                                start.putExtra("isHost", "True");
-                                startActivity(start);
+                            try {
+                                String value = (String) dataSnapshot.getValue();
+                                //  as soon as friend has paired, start the game
+
+                                // if code is changed, start the game
+                                if (value.equals("Play")) {
+                                    Intent start = new Intent(getContext(), onlineActivity.class);
+                                    start.putExtra("isHost", "True");
+                                    startActivity(start);
+                                }
+
+
+                            } catch (Exception e) {
                             }
-
-
-                        } catch (Exception e) {
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value;
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value;
+                        }
+                    });
 
+                }
             }
         });
 

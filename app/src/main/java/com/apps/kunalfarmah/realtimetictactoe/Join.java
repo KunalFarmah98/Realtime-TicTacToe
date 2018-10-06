@@ -45,6 +45,7 @@ public class Join extends Fragment {
         token = v.findViewById(R.id.token1);
         play = v.findViewById(R.id.play);
 
+
         //final String val = token.getText().toString();
 
         // storing the token in the db
