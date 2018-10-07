@@ -59,6 +59,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     // reference for the moves
     DatabaseReference ref;
 
+    DatabaseReference closeref;
     // reference for the turns
     DatabaseReference turn;
 
@@ -88,6 +89,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         // setting host to be true for host and false for joiner
         mdata = FirebaseDatabase.getInstance();
+
         turn = mdata.getReference("Host");
         turn.setValue(true);
 
@@ -107,7 +109,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     // System.out.println("connected");
                 } else {
                     lostConnection.setValue(true);
-                    Toast.makeText(getApplicationContext(),"Lost",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Lost",Toast.LENGTH_SHORT).show();
 
                     //  finish();
                 }
@@ -592,6 +594,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     }
 
 
+
                 } catch (Exception e) {
                 }
             }
@@ -604,9 +607,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-
-//TODO
-
         lostConnection.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -615,7 +615,16 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     boolean val = dataSnapshot.getValue(Boolean.class);
 
                     if (val) {
-                        finish();
+                       // finish();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+                                gameover.putExtra("isHost", ishost);
+                                startActivity(gameover);
+                            }
+                        }, 1000);
                         Toast.makeText(getApplicationContext(), "Lost Connection to the other Player", Toast.LENGTH_SHORT).show();
                     }
 
@@ -1045,6 +1054,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         ref.removeEventListener(movelistener);
         iswin.removeValue();
+//        connectedRef.removeValue();
+  //      lostConnection.removeValue();
 
         setDefaults();
 

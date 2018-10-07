@@ -1,12 +1,17 @@
 package com.apps.kunalfarmah.realtimetictactoe;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +19,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class gameover_online extends AppCompatActivity {
 
@@ -42,9 +51,16 @@ public class gameover_online extends AppCompatActivity {
 
 
                     if (restarted) {
-                        Intent start = new Intent(getApplicationContext(), onlineActivity.class);
-                        start.putExtra("isHost", ishost);
-                        startActivity(start);
+
+                        if (hasActiveInternetConnection(getApplicationContext())) {
+                            Intent start = new Intent(getApplicationContext(), onlineActivity.class);
+                            start.putExtra("isHost", ishost);
+                            startActivity(start);
+                            //finish();
+                           // restartref.setValue(false);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Please check your Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
 
@@ -66,8 +82,8 @@ public class gameover_online extends AppCompatActivity {
                     Boolean closed = dataSnapshot.getValue(Boolean.class);
 
                     if (closed) {
-                        finish();
                         ActivityCompat.finishAffinity(gameover_online.this);
+                        finish();
                         System.exit(0);
                     }
                 } catch (Exception e) {
@@ -132,6 +148,40 @@ public class gameover_online extends AppCompatActivity {
         super.onDestroy();
         mdata.goOffline();
 
+    }
+
+    // checks if it is connceted to a network
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    // this checks if connection has internet access
+
+    public boolean hasActiveInternetConnection(Context context) {
+        if (isNetworkAvailable()) {
+
+            // forcefully using network on main threaad
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                // Log.e(LOG_TAG, "Error checking internet connection", e);
+            }
+        } else {
+            //Log.d(LOG_TAG, "No network available!");
+        }
+        return false;
     }
 }
 

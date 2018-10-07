@@ -61,7 +61,7 @@ TextView hidden3;
                 // storing the token in the db
                 mref = mDatabase.getReference().child("Code");
 
-                if (token.getText().toString().equals("")) {
+                if (token.getText().toString().equals("") || token.getText().toString().equals(" ")) {
                     hidden3.setVisibility(View.VISIBLE);
                 } else {
                     mref.getDatabase().getReference("Code").setValue(token.getText().toString());

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorAccent"
+    android:layout_height="match_parent"
+    tools:context="com.apps.kunalfarmah.realtimetictactoe.how_to_play">
+    
+    <TextView
+        android:layout_margin="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:padding="10dp"
+        android:textSize="@dimen/_25sdp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:textAlignment="center"
+        android:text="How to Play"/>
+    
+
+        <LinearLayout
+            
+            android:layout_marginTop="120dp"
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:padding="15dp"
+                android:text="@string/how_to_play1"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+
+                android:text="@string/how_to_play2"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:text="@string/how_to_play3"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:text="@string/how_to_play4"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:text="@string/smile"
+                android:textColor="#ffff" />
+
+        </LinearLayout>
+
+</FrameLayout>

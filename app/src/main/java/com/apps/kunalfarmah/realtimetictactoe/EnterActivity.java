@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
@@ -35,8 +36,10 @@ public class EnterActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     Button offline;
     Button online;
+    ImageButton info;
     // a variable to check if we are inside teh host or join screen
-    FrameLayout fragments;
+    static FrameLayout fragments;
+
     static String User;
 
     AboutMe about = new AboutMe();
@@ -82,7 +85,9 @@ public class EnterActivity extends AppCompatActivity {
 
         offline = findViewById(R.id.offline);
         online = findViewById(R.id.online);
+        info = findViewById(R.id.info);
         fragments = findViewById(R.id.fragment_containter);
+        //fragment1 = findViewById(R.id.how_to_play);
 
         //mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -138,6 +143,17 @@ public class EnterActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                how_to_play play = new how_to_play();
+                fragments.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,play).addToBackStack("info").commit();
+            }
+        });
     }
 
 
@@ -146,6 +162,8 @@ public class EnterActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         // removing the fragment if back is pressed on the host or join screen
+
+       // fragment1.setVisibility(View.GONE);
 
         if(getSupportFragmentManager().getBackStackEntryCount()==0)
         fragments.setVisibility(View.GONE);
@@ -192,6 +210,8 @@ public class EnterActivity extends AppCompatActivity {
                 }
                 // ...
             } else {
+
+                onBackPressed();
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.

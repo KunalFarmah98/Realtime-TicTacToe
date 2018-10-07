@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
@@ -84,6 +85,8 @@ class AboutMe : Fragment() {
             } catch (e: Exception) {
                 Toast.makeText(context, "No Email Apps found on the device", Toast.LENGTH_SHORT).show()
             }
+
+            EnterActivity.fragments.visibility = GONE
         }
 
         fb!!.setOnClickListener {
@@ -96,6 +99,9 @@ class AboutMe : Fragment() {
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(context, "No Web Browsers found on the device", Toast.LENGTH_SHORT).show()
             }
+
+            EnterActivity.fragments.visibility=GONE
+
         }
 
 //        number!!.setOnClickListener {

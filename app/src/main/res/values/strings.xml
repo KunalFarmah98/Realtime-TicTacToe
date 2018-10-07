@@ -2,5 +2,11 @@
     <string name="app_name">Realtime tic tac toe</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment"> Hello blank fragment</string>
+    <string name="how_to_play1">  *   Press Host to host the game.</string>
+    <string name="how_to_play2">*   Enter the Token and ask your friend to press Join and enter the same token and press Play</string>
+    <string name="how_to_play3">*   The Game updates all the data automatically and requires a working
+        Internet connection.</string>
+    <string name="how_to_play4"> *   If the connection is disrupted, the ongoing game will be cancelled and can be restarted after connection is regained.</string>
+    <string name="smile">Happy Gaming :)</string>
 </resources>
