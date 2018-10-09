@@ -13,12 +13,12 @@
 
         <TextView
             android:id="@+id/text"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_80sdp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:textSize="30sp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:textSize="@dimen/_27sdp"
             android:text="Remote Token Connection Wizard"
             android:background="@color/colorPrimaryDark"
             android:textColor="#ffffff"/>
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/_55sdp"
             android:hint="Enter a Token Number or String"
             android:textColor="#ffffff"/>
 

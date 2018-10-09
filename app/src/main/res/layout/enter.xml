@@ -26,50 +26,51 @@
 
 
     <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_90sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:background="@color/colorPrimary"
-        android:padding="10dp"
+        android:padding="@dimen/_5sdp"
+        android:gravity="center"
         android:text="SELECT GAME MODE"
         android:textAlignment="center"
         android:textColor="#ffffff"
-        android:textSize="40sp" />
+        android:textSize="@dimen/_30sdp" />
 
 
     <Button
         android:id="@+id/offline"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_165sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="@dimen/_65sdp"
         android:background="#b322ff"
         android:text="Offline : 1 Device, 2 Players"
         android:textColor="#fff2d8"
-        android:textSize="15sp" />
+        android:textSize="@dimen/_13sdp" />
 
 
     <Button
         android:id="@+id/online"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_165sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/_50sdp"
         android:background="#b322ff"
         android:text="Realtime : 2 Devices, 2 Players"
         android:textColor="#fff2d8"
-        android:textSize="15sp" />
+        android:textSize="@dimen/_13sdp" />
 
     <ImageButton
         android:id="@+id/info"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:scaleType="fitCenter"
         android:background="@color/colorAccent"
-        android:src="@drawable/info3" />
+        android:src="@drawable/info" />
 
 
 </LinearLayout>

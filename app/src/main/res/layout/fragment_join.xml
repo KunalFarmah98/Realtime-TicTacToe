@@ -13,13 +13,13 @@
 
         <TextView
             android:id="@+id/text"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_80sdp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:textSize="30sp"
-            android:text="Remote token Connection Wizard"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:textSize="@dimen/_27sdp"
+            android:text="Remote Token Connection Wizard"
             android:background="@color/colorPrimaryDark"
             android:textColor="#ffffff"/>
 
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="154dp"
-            android:hint="Enter the Registered token1 Number"
+            android:layout_marginTop="@dimen/_165sdp"
+            android:hint="Enter the Registered token Number"
             android:textColor="#ffffff" />
 
         <Button

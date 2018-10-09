@@ -119,7 +119,7 @@ If anyone finds a bug or a crash at some point, feel free to reach me at the und
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toStartOf="@+id/dev"
             android:background="@color/colorAccent"
-            android:src="@drawable/gmail3" />
+            android:src="@drawable/gmail" />
 
         <TextView
             android:id="@+id/email"

@@ -100,7 +100,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         lostConnection.setValue(false);
         //lostConnection.setValue(false);
 
-        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        /** to handle lost connection*/
+        /*connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -122,6 +123,42 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+
+        lostConnection.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                try {
+                    boolean val = dataSnapshot.getValue(Boolean.class);
+
+                    if (val) {
+                        // finish();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Intent start = new Intent(getApplicationContext(),EnterActivity.class);
+                                startActivity(start);
+//                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+//                                gameover.putExtra("isHost", ishost);
+//                                startActivity(gameover);
+                            }
+                        }, 1000);
+                        Toast.makeText(getApplicationContext(), "Lost Connection to the other Player", Toast.LENGTH_SHORT).show();
+                    }
+
+                    // else{}
+
+                } catch(Exception e){}
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+*/
 
         i1 = (ImageView) findViewById(R.id.imageView1);
         i2 = (ImageView) findViewById(R.id.imageView2);
@@ -607,38 +644,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-        lostConnection.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                try {
-                    boolean val = dataSnapshot.getValue(Boolean.class);
-
-                    if (val) {
-                       // finish();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
-                                gameover.putExtra("isHost", ishost);
-                                startActivity(gameover);
-                            }
-                        }, 1000);
-                        Toast.makeText(getApplicationContext(), "Lost Connection to the other Player", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // else{}
-
-                } catch(Exception e){}
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
 

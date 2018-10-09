@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.EnterActivity"
             android:screenOrientation="portrait">
@@ -31,6 +32,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity" />
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"></activity>
+
     </application>
 
 </manifest>
