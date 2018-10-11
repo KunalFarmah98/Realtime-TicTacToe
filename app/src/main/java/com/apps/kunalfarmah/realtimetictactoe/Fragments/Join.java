@@ -1,4 +1,4 @@
-package com.apps.kunalfarmah.realtimetictactoe;
+package com.apps.kunalfarmah.realtimetictactoe.Fragments;
 
 
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.apps.kunalfarmah.realtimetictactoe.onlineActivity;
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

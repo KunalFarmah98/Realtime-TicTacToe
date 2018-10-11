@@ -59,7 +59,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     // reference for the moves
     DatabaseReference ref;
 
-    DatabaseReference closeref;
+   // DatabaseReference closeref;
     // reference for the turns
     DatabaseReference turn;
 

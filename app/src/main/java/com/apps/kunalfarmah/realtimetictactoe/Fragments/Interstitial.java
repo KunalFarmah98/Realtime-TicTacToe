@@ -1,4 +1,4 @@
-package com.apps.kunalfarmah.realtimetictactoe;
+package com.apps.kunalfarmah.realtimetictactoe.Fragments;
 
 
 import android.app.Activity;
@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
+import com.apps.kunalfarmah.realtimetictactoe.EnterActivity;
 import com.example.kunalfarmah.realtimetictactoe.R;
 
 

@@ -1,4 +1,4 @@
-package com.apps.kunalfarmah.realtimetictactoe
+package com.apps.kunalfarmah.realtimetictactoe.Fragments
 
 
 import android.content.ActivityNotFoundException
@@ -8,14 +8,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.apps.kunalfarmah.realtimetictactoe.EnterActivity
 import com.example.kunalfarmah.realtimetictactoe.R
 
 

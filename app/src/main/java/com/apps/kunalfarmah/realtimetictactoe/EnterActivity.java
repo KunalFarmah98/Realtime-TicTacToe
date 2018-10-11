@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +17,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.apps.kunalfarmah.realtimetictactoe.Fragments.AboutMe;
+import com.apps.kunalfarmah.realtimetictactoe.Fragments.Interstitial;
+import com.apps.kunalfarmah.realtimetictactoe.Fragments.how_to_play;
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -38,7 +39,7 @@ public class EnterActivity extends AppCompatActivity {
     Button online;
     ImageButton info;
     // a variable to check if we are inside teh host or join screen
-    static FrameLayout fragments;
+    public static FrameLayout fragments;
 
     static String User;
 
@@ -211,29 +212,13 @@ public class EnterActivity extends AppCompatActivity {
                 // ...
             } else {
 
-                onBackPressed();
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
-//
-//                Toast.makeText(getApplicationContext(), "Please Sign to Continue", Toast.LENGTH_SHORT).show();
-//
-//                // Choose authentication providers
-//                List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                        new AuthUI.IdpConfig.EmailBuilder().build(),
-//                        new AuthUI.IdpConfig.PhoneBuilder().build(),
-//                        new AuthUI.IdpConfig.GoogleBuilder().build());
-//
-//// Create and launch sign-in intent
-//                startActivityForResult(
-//                        AuthUI.getInstance()
-//                                .createSignInIntentBuilder()
-//                                .setAvailableProviders(providers)
-//                                .setIsSmartLockEnabled(true)
-//                                .setLogo(R.drawable.logo)
-//                                .build(),
-//                        RC_SIGN_IN);
+                onBackPressed();
+
+
             }
         }
     }
