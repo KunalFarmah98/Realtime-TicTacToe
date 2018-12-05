@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity_optimised extends AppCompatActivity implements View.OnClickListener {
@@ -33,6 +37,12 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     TextView t1;
     TextView t2;
 
+    TextView movescount;
+    LinearLayout timer;
+
+    int minutes=0,seconds=0;
+
+    TextView min,sec;
 
     View win1;
     View win2;
@@ -69,6 +79,14 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
 
         t1 = (TextView) findViewById(R.id.textView);
         t2 = (TextView) findViewById(R.id.textView2);
+
+        movescount = findViewById(R.id.moves);
+
+        timer = findViewById(R.id.timer);
+        timer.setVisibility(View.VISIBLE);
+
+        min = findViewById(R.id.minutes);
+        sec = findViewById(R.id.seconds);
 
         if (!pl1.equals("") && !pl2.equals("")) {
             t1.setText(pl1 + " : X");
@@ -132,6 +150,51 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         i9.setOnClickListener(this);
 
 
+        //Declare the timer
+        Timer t = new Timer();
+
+
+        //Set the schedule function and rate
+        t.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        min.setText(String.valueOf(minutes));
+                        if(seconds<10)
+                            sec.setText("0"+String.valueOf(seconds));
+                        else
+                            sec.setText(String.valueOf(seconds));
+                        seconds += 1;
+
+                        if(seconds == 59 )
+                        {
+                            seconds=0;
+                            minutes+=1;
+                            min.setText(String.valueOf(minutes));
+
+                            if(seconds<10)
+                                sec.setText("0"+String.valueOf(seconds));
+                            else
+                                sec.setText(String.valueOf(seconds));
+
+                            seconds += 1;
+
+                        }
+
+
+
+                    }
+
+                });
+            }
+
+        }, 0, 1000);
+
+
     }
 
     @Override
@@ -139,6 +202,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         //implementing onClick only once for all buttons by using their IDs
 
         ++turns;
+
+        movescount.setText("Moves : "+ (turns+1));
 
         if(turns%2!=0){
 
@@ -308,6 +373,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 public void run() {
 
                     Intent gameover = new Intent(MainActivity_optimised.this, com.apps.kunalfarmah.realtimetictactoe.gameover.class);
+                    gameover.putExtra("Time",min.getText()+" : "+sec.getText());
                     startActivity(gameover);
                 }
             }, 1400);
@@ -322,6 +388,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                 public void run() {
 
                     Intent gameover = new Intent(MainActivity_optimised.this, com.apps.kunalfarmah.realtimetictactoe.gameover.class);
+                    gameover.putExtra("Time",min.getText()+" : "+sec.getText());
                     startActivity(gameover);
                 }
             }, 1400);

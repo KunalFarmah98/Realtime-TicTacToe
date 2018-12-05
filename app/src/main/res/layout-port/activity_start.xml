@@ -30,6 +30,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="162dp"
+        android:maxLength="10"
         android:hint="Player 1 Name"
         android:textColor="#f8f8ff"
         android:backgroundTint="@color/colorPrimary"
@@ -44,6 +45,7 @@
         android:layout_marginBottom="207dp"
         android:backgroundTint="@color/colorPrimary"
         android:hint="Player 2 Name"
+        android:maxLength="10"
         android:textColor="#f8f8ff"
         android:textSize="30sp" />
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class onlineActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +47,12 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
     TextView player1;
     TextView player2;
+    TextView movescount;
+    LinearLayout timer;
+
+    int minutes=0,seconds=0;
+
+    TextView min,sec;
 
     ImageView hosticon;
     ImageView awayicon;
@@ -69,6 +78,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     //a reference to detect loss in connection
     DatabaseReference connectedRef;
 
+   // DatabaseReference movesref;
+
     DatabaseReference lostConnection;
 
     ChildEventListener movelistener;
@@ -84,6 +95,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // finding which one is host;
         ishost = getIntent().getSerializableExtra("isHost").toString();
 
@@ -95,6 +108,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         iswin = mdata.getReference("Win");
         iswin.setValue(" ");
+
+        //movesref = mdata.getReference("Movescnt");
+        //movesref.setValue(0);
 
         lostConnection = mdata.getReference("connection_lost");
         lostConnection.setValue(false);
@@ -175,6 +191,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         player1 = findViewById(R.id.textView);
         player2 = findViewById(R.id.textView2);
+        movescount = findViewById(R.id.moves);
+
+        timer = findViewById(R.id.timer);
+        timer.setVisibility(View.VISIBLE);
+
+        min = findViewById(R.id.minutes);
+        sec = findViewById(R.id.seconds);
 
 
         player1.setText(pl1);
@@ -603,6 +626,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
+                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
                                 startActivity(gameover);
                             }
                         }, 1400);
@@ -614,6 +638,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
+                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
                                 startActivity(gameover);
                             }
                         }, 1400);
@@ -625,6 +650,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
+                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
                                 startActivity(gameover);
                             }
                         }, 1400);
@@ -645,6 +671,49 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
+        //Declare the timer
+        Timer t = new Timer();
+
+
+        //Set the schedule function and rate
+        t.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        min.setText(String.valueOf(minutes));
+                        if(seconds<10)
+                        sec.setText("0"+String.valueOf(seconds));
+                        else
+                            sec.setText(String.valueOf(seconds));
+                        seconds += 1;
+
+                        if(seconds == 59 )
+                        {
+                            seconds=0;
+                            minutes+=1;
+                            min.setText(String.valueOf(minutes));
+
+                            if(seconds<10)
+                                sec.setText("0"+String.valueOf(seconds));
+                            else
+                                sec.setText(String.valueOf(seconds));
+
+                            seconds += 1;
+
+                        }
+
+
+
+                    }
+
+                });
+            }
+
+        }, 0, 1000);
 
 
 
@@ -661,6 +730,10 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+
+
+
+        movescount.setText("Moves : "+(steps+1));
 
 
        // ref.addChildEventListener(movelistener);

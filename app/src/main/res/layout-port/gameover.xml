@@ -19,13 +19,25 @@
         android:textColor="#000000"
         android:textSize="60dp" />
 
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time: 0:00"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/over"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_25sdp"/>
+
     <ImageButton
         android:id="@+id/repeat"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="183dp"
+        android:layout_marginTop="235dp"
         android:background="@drawable/replay_buttton_clicked"
         android:scaleType="fitXY"
         android:src="@drawable/repeat" />
@@ -37,7 +49,7 @@
         android:layout_alignParentBottom="true"
 
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="105dp"
+        android:layout_marginBottom="55dp"
         android:background="@drawable/exit_button_clicked"
         android:scaleType="fitXY"
         android:src="@drawable/x" />
