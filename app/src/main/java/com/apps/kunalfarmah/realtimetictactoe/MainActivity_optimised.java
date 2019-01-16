@@ -155,6 +155,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
 
 
         //Set the schedule function and rate
+        // timer runs
         t.scheduleAtFixedRate(new TimerTask() {
 
             @Override

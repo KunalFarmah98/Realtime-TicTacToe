@@ -22,6 +22,7 @@ public class gameover extends AppCompatActivity {
 
         final String timeval = getIntent().getStringExtra("Time");
 
+        // displaying the time taken in a match
         time.setText("Time : "+ timeval);
 
         ImageButton replay = findViewById(R.id.repeat);
