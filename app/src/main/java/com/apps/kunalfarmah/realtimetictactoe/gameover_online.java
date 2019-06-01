@@ -32,19 +32,52 @@ public class gameover_online extends AppCompatActivity {
     DatabaseReference restartref;
 
     TextView time;
+    int difficulty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameover);
 
         time = findViewById(R.id.time);
+        ImageButton replay = findViewById(R.id.repeat);
+        final ImageButton close = findViewById(R.id.close);
+
+        difficulty = getIntent().getIntExtra("difficulty",2);
+
+        replay.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                restartref.setValue(true);
+               /*  //this function will only close the game over activity and will restart from the main activity
+                Intent start = new Intent(getApplicationContext(),onlineActivity.class);
+                start.putExtra("isHost",ishost);
+                startActivity(start);
+                System.exit(0);*/
+            }
+        });
+
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                restartref.setValue(false);
+                closeref.setValue(true);
+/*
+                // this function will close the app
+                ActivityCompat.finishAffinity(gameover_online.this);
+                System.exit(0)*/;
+            }
+        });
+
+
 
         final String ishost = getIntent().getSerializableExtra("isHost").toString();
 
         final String timeval = getIntent().getStringExtra("Time");
 
         time.setText("Time : "+ timeval);
-
 
 
         mdata =FirebaseDatabase.getInstance();
@@ -66,6 +99,7 @@ public class gameover_online extends AppCompatActivity {
                         if (hasActiveInternetConnection(getApplicationContext())) {
                             Intent start = new Intent(getApplicationContext(), onlineActivity.class);
                             start.putExtra("isHost", ishost);
+                            start.putExtra("difficulty", difficulty);
                             startActivity(start);
                             //finish();
                            // restartref.setValue(false);
@@ -109,33 +143,13 @@ public class gameover_online extends AppCompatActivity {
 
 
 
-        ImageButton replay = findViewById(R.id.repeat);
-        replay.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                restartref.setValue(true);
-                // this function will only close the game over activity and will restart from the main activity
-//                Intent start = new Intent(getApplicationContext(),onlineActivity.class);
-//                start.putExtra("isHost",ishost);
-//                startActivity(start);
-               // System.exit(0);
-            }
-        });
 
-        final ImageButton close = findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                restartref.setValue(false);
-                closeref.setValue(true);
-
-                // this function will close the app
-//                ActivityCompat.finishAffinity(gameover_online.this);
-//                System.exit(0);
-            }
-        });
+        int i  =timeval.indexOf(':');
+        String min = timeval.substring(0,i-1);
+        if(min.equals("1")){
+            Toast.makeText(getApplicationContext(),"One or more players have lost connection to the server :(", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

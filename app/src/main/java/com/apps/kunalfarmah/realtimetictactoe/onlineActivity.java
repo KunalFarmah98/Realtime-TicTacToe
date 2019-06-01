@@ -1,9 +1,11 @@
 package com.apps.kunalfarmah.realtimetictactoe;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,8 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 public class onlineActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,25 +54,35 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     TextView movescount;
     LinearLayout timer;
 
-    int minutes=0,seconds=0;
+    Timer t;
 
-    TextView min,sec;
+
+    static int minutes, seconds;
+    static int timeval;
+
+    TextView min, sec;
 
     ImageView hosticon;
     ImageView awayicon;
 
 
-    String pl1 = "Host : X";
-    String pl2 ="Away : O";
+    String hostName;
+    String awayName;
+    String pl1;
+    String pl2;
+
+    int c=0;
 
     String ishost = "";
+    int difficulty;
+
     // String turn="";
 
     FirebaseDatabase mdata;
     // reference for the moves
-    DatabaseReference ref;
+    DatabaseReference ref, host, away, crash;
 
-   // DatabaseReference closeref;
+    // DatabaseReference closeref;
     // reference for the turns
     DatabaseReference turn;
 
@@ -76,32 +90,100 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     DatabaseReference iswin;
 
     //a reference to detect loss in connection
-    DatabaseReference connectedRef;
+    // DatabaseReference connectedRef;
 
-   // DatabaseReference movesref;
+    // DatabaseReference movesref;
 
-    DatabaseReference lostConnection;
+    //DatabaseReference lostConnection;
 
     ChildEventListener movelistener;
+
+    SharedPreferences timepref;
+    SharedPreferences.Editor medit;
 
     boolean host_turn;
     boolean win;
 
 
- int steps=0;
+    int steps = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        timepref = getApplicationContext().getSharedPreferences("timeval",MODE_PRIVATE);
+        medit = timepref.edit();
 
+
+        difficulty = getIntent().getIntExtra("difficulty",2);
+        //Declare the timer
+
+
+        player1 = findViewById(R.id.textView);
+        player2 = findViewById(R.id.textView2);
+
+        hosticon = findViewById(R.id.host);
+        awayicon = findViewById(R.id.away);
+
+
+        movescount = findViewById(R.id.moves);
+
+        timer = findViewById(R.id.timer);
+        timer.setVisibility(View.VISIBLE);
+
+        min = findViewById(R.id.minutes);
+        sec = findViewById(R.id.seconds);
+
+
+//        player1.setText(pl1);
+//        player2.setText(pl2);
+
+        mdata = FirebaseDatabase.getInstance();
+
+        ref = mdata.getReference("Moves");
+
+        host = mdata.getReference("HostName");
+
+        host.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                hostName = dataSnapshot.getValue(String.class);
+                player1.setText(hostName + " : X");
+                Log.d("Host", hostName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+        away = mdata.getReference("AwayName");
+
+        away.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                awayName = dataSnapshot.getValue(String.class);
+                player2.setText(awayName + " : O");
+                Log.d("Away", awayName);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+        pl1 = hostName + " : X";
+        pl2 = awayName + " : O";
 
         // finding which one is host;
         ishost = getIntent().getSerializableExtra("isHost").toString();
 
         // setting host to be true for host and false for joiner
-        mdata = FirebaseDatabase.getInstance();
 
         turn = mdata.getReference("Host");
         turn.setValue(true);
@@ -109,72 +191,33 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         iswin = mdata.getReference("Win");
         iswin.setValue(" ");
 
-        //movesref = mdata.getReference("Movescnt");
-        //movesref.setValue(0);
+        // handling if any one device crashes during the game
 
-        lostConnection = mdata.getReference("connection_lost");
-        lostConnection.setValue(false);
-        //lostConnection.setValue(false);
+        crash = mdata.getReference("Crash");
+        crash.setValue(false);
 
-        /** to handle lost connection*/
-        /*connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
+        crash.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    // System.out.println("connected");
-                } else {
-                    lostConnection.setValue(true);
-                    //Toast.makeText(getApplicationContext(),"Lost",Toast.LENGTH_SHORT).show();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean crash = dataSnapshot.getValue(boolean.class);
 
-                    //  finish();
+                if (crash == true) {
+
+                    t.cancel();
+                    t.purge();
+                    timeval =-1;
+
+                    Toast.makeText(getApplicationContext(), "A User left the server :(. Please restart the game and authenticate to play again", Toast.LENGTH_SHORT).show();
+//                    ActivityCompat.finishAffinity(onlineActivity.this);
+//                    finish();
+
                 }
             }
 
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
-
-
-        lostConnection.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                try {
-                    boolean val = dataSnapshot.getValue(Boolean.class);
-
-                    if (val) {
-                        // finish();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Intent start = new Intent(getApplicationContext(),EnterActivity.class);
-                                startActivity(start);
-//                                Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
-//                                gameover.putExtra("isHost", ishost);
-//                                startActivity(gameover);
-                            }
-                        }, 1000);
-                        Toast.makeText(getApplicationContext(), "Lost Connection to the other Player", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // else{}
-
-                } catch(Exception e){}
-            }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-*/
 
         i1 = (ImageView) findViewById(R.id.imageView1);
         i2 = (ImageView) findViewById(R.id.imageView2);
@@ -186,23 +229,81 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         i8 = (ImageView) findViewById(R.id.imageView8);
         i9 = (ImageView) findViewById(R.id.imageView9);
 
-        hosticon = findViewById(R.id.host);
-        awayicon = findViewById(R.id.away);
-
-        player1 = findViewById(R.id.textView);
-        player2 = findViewById(R.id.textView2);
-        movescount = findViewById(R.id.moves);
-
-        timer = findViewById(R.id.timer);
-        timer.setVisibility(View.VISIBLE);
-
-        min = findViewById(R.id.minutes);
-        sec = findViewById(R.id.seconds);
+        setDefaults();
 
 
-        player1.setText(pl1);
-        player2.setText(pl2);
+        t = new Timer();
 
+        if(difficulty==1) {
+            seconds = 20;
+        }
+        else if(difficulty==2){
+            seconds =15;
+        }
+        else if(difficulty==3){
+            seconds=10;
+        }
+        else {
+            seconds=20;
+        }
+
+        sec.setText(String.valueOf(seconds));
+
+
+        timeval = seconds;
+
+
+        //Set the schedule function and rate
+        // code to run a timer in game
+
+
+        t.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        ++c;
+
+                        Log.d("timeval", String.valueOf(timeval));
+                        min.setText(String.valueOf(minutes));
+                        if (timeval < 10)
+                            sec.setText("0" + timeval);
+                        else
+                            sec.setText(String.valueOf(timeval));
+                        timeval = timeval - 1;
+
+                        if (timeval == 0) {
+                            Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
+                            t.cancel();
+                            t.purge();
+//                            timeval = seconds;
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
+                                    gameover.putExtra("isHost", ishost);
+                                    gameover.putExtra("Time", min.getText() + " : " + seconds);
+                                    gameover.putExtra("Crash", false);
+                                    gameover.putExtra("difficulty",difficulty);
+
+                                    startActivity(gameover);
+
+
+                                }
+                            }, 1400);
+                        }
+                    }
+
+
+                });
+            }
+
+        }, 0, 1000);
 
 
 
@@ -225,15 +326,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     awayicon.setVisibility(View.INVISIBLE);
                     hosticon.setVisibility(View.VISIBLE);
 
-//                    i1.setClickable(true);
-//                    i2.setClickable(true);
-//                    i3.setClickable(true);
-//                    i4.setClickable(true);
-//                    i5.setClickable(true);
-//                    i6.setClickable(true);
-//                    i7.setClickable(true);
-//                    i8.setClickable(true);
-//                    i9.setClickable(true);
                     settingclicklisteners();
 
                     if (moves[0][0] != -1) {
@@ -296,16 +388,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                     awayicon.setVisibility(View.VISIBLE);
                     hosticon.setVisibility(View.INVISIBLE);
-
-//                    i1.setClickable(true);
-//                    i2.setClickable(true);
-//                    i3.setClickable(true);
-//                    i4.setClickable(true);
-//                    i5.setClickable(true);
-//                    i6.setClickable(true);
-//                    i7.setClickable(true);
-//                    i8.setClickable(true);
-//                    i9.setClickable(true);
 
                     settingclicklisteners();
 
@@ -374,13 +456,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
+
+
 //        if (ishost.equals("True"))
 //            turn.setValue(true);
 //
 //        else
 //            turn.setValue(false);
-
-
 
 
         /** child event listener for the data in the image views*/
@@ -390,98 +472,101 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 // Get imgbox object and use the values to update the UI with either o or x
+                try {
 
+                    imagesbox val = dataSnapshot.getValue(imagesbox.class);
 
-                imagesbox val = dataSnapshot.getValue(imagesbox.class);
+                    int o_or_x = val.value;
 
-                int o_or_x = val.value;
-
-                switch (val.imgvw) {
-                    case 1:
-                        if (o_or_x == 0) {
-                            i1.setImageResource(R.drawable.o);
-                            //moves[0][0] = 0;
-                        } else {
-                            i1.setImageResource(R.drawable.x);
-                            // moves[0][0] = 1;
-                        }
-                        break;
-                    case 2:
-                        if (o_or_x == 0) {
-                            i2.setImageResource(R.drawable.o);
-                            // moves[0][1] = 0;
-                        } else {
-                            i2.setImageResource(R.drawable.x);
-                            //   moves[0][1] = 1;
-                        }
-                        break;
-                    case 3:
-                        if (o_or_x == 0) {
-                            i3.setImageResource(R.drawable.o);
-                            //  moves[0][2] = 0;
-                        } else {
-                            i3.setImageResource(R.drawable.x);
-                            // moves[0][2] = 1;
-                        }
-                        break;
-                    case 4:
-                        if (o_or_x == 0) {
-                            i4.setImageResource(R.drawable.o);
-                            //  moves[1][0] = 0;
-                        } else {
-                            i4.setImageResource(R.drawable.x);
-                            //  moves[1][0] = 1;
-                        }
-                        break;
-                    case 5:
-                        if (o_or_x == 0) {
-                            i5.setImageResource(R.drawable.o);
-                            //  moves[1][1] = 0;
-                        } else {
-                            i5.setImageResource(R.drawable.x);
-                            //  moves[1][1] = 1;
-                        }
-                        break;
-                    case 6:
-                        if (o_or_x == 0) {
-                            i6.setImageResource(R.drawable.o);
-                            //  moves[1][2] = 0;
-                        } else {
-                            i6.setImageResource(R.drawable.x);
-                            //  moves[1][2] = 1;
-                        }
-                        break;
-                    case 7:
-                        if (o_or_x == 0) {
-                            i7.setImageResource(R.drawable.o);
-                            //   moves[2][0] = 0;
-                        } else {
-                            i7.setImageResource(R.drawable.x);
-                            //   moves[2][0] = 1;
-                        }
-                        break;
-                    case 8:
-                        if (o_or_x == 0) {
-                            i8.setImageResource(R.drawable.o);
-                            //  moves[2][1] = 0;
-                        } else {
-                            i8.setImageResource(R.drawable.x);
-                            //   moves[2][1] = 1;
-                        }
-                        break;
-                    case 9:
-                        if (o_or_x == 0) {
-                            i9.setImageResource(R.drawable.o);
-                            //  moves[2][2] = 0;
-                        } else {
-                            i9.setImageResource(R.drawable.x);
-                            //  moves[2][2] = 1;
-                        }
-                        break;
+                    switch (val.imgvw) {
+                        case 1:
+                            if (o_or_x == 0) {
+                                i1.setImageResource(R.drawable.o);
+                                //moves[0][0] = 0;
+                            } else {
+                                i1.setImageResource(R.drawable.x);
+                                // moves[0][0] = 1;
+                            }
+                            break;
+                        case 2:
+                            if (o_or_x == 0) {
+                                i2.setImageResource(R.drawable.o);
+                                // moves[0][1] = 0;
+                            } else {
+                                i2.setImageResource(R.drawable.x);
+                                //   moves[0][1] = 1;
+                            }
+                            break;
+                        case 3:
+                            if (o_or_x == 0) {
+                                i3.setImageResource(R.drawable.o);
+                                //  moves[0][2] = 0;
+                            } else {
+                                i3.setImageResource(R.drawable.x);
+                                // moves[0][2] = 1;
+                            }
+                            break;
+                        case 4:
+                            if (o_or_x == 0) {
+                                i4.setImageResource(R.drawable.o);
+                                //  moves[1][0] = 0;
+                            } else {
+                                i4.setImageResource(R.drawable.x);
+                                //  moves[1][0] = 1;
+                            }
+                            break;
+                        case 5:
+                            if (o_or_x == 0) {
+                                i5.setImageResource(R.drawable.o);
+                                //  moves[1][1] = 0;
+                            } else {
+                                i5.setImageResource(R.drawable.x);
+                                //  moves[1][1] = 1;
+                            }
+                            break;
+                        case 6:
+                            if (o_or_x == 0) {
+                                i6.setImageResource(R.drawable.o);
+                                //  moves[1][2] = 0;
+                            } else {
+                                i6.setImageResource(R.drawable.x);
+                                //  moves[1][2] = 1;
+                            }
+                            break;
+                        case 7:
+                            if (o_or_x == 0) {
+                                i7.setImageResource(R.drawable.o);
+                                //   moves[2][0] = 0;
+                            } else {
+                                i7.setImageResource(R.drawable.x);
+                                //   moves[2][0] = 1;
+                            }
+                            break;
+                        case 8:
+                            if (o_or_x == 0) {
+                                i8.setImageResource(R.drawable.o);
+                                //  moves[2][1] = 0;
+                            } else {
+                                i8.setImageResource(R.drawable.x);
+                                //   moves[2][1] = 1;
+                            }
+                            break;
+                        case 9:
+                            if (o_or_x == 0) {
+                                i9.setImageResource(R.drawable.o);
+                                //  moves[2][2] = 0;
+                            } else {
+                                i9.setImageResource(R.drawable.x);
+                                //  moves[2][2] = 1;
+                            }
+                            break;
 
                         default:
                             break;
+                    }
+                } catch (Exception e) {
                 }
+
             }
 
 
@@ -617,45 +702,67 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 try {
+
+                  //  timeval =seconds;
+                    String hostname = player1.getText().toString();
+                    String awayname = player2.getText().toString();
+                    int i1 = hostname.indexOf(":");
+                    int i2 = awayname.indexOf(":");
+                    hostname = hostName.substring(0, i1 - 1);
+                    awayname = awayName.substring(0, i2 - 1);
+
                     String winner = dataSnapshot.getValue(String.class);
                     if (winner.equalsIgnoreCase("Host")) {
-                        Toast.makeText(getApplicationContext(), "Host Wins", Toast.LENGTH_SHORT).show();
+                        t.cancel();
+                        t.purge();
+                        Toast.makeText(getApplicationContext(), hostname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
 
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
+                                gameover.putExtra("Time", min.getText() +" : "+ ((c<10)?("0"+ c) : c));
+                                gameover.putExtra("Crash", false);
+                                gameover.putExtra("difficulty",difficulty);
+//
+
                                 startActivity(gameover);
                             }
                         }, 1400);
                     } else if (winner.equalsIgnoreCase("Away")) {
-                        Toast.makeText(getApplicationContext(), "Away Wins", Toast.LENGTH_SHORT).show();
+                        t.cancel();
+                        t.purge();
+                        Toast.makeText(getApplicationContext(), awayname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
+                                gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
+                                gameover.putExtra("Crash", false);
+                                gameover.putExtra("difficulty",difficulty);
+
                                 startActivity(gameover);
                             }
                         }, 1400);
                     } else if (winner.equalsIgnoreCase("Draw")) {
+                        t.cancel();
+                        t.purge();
                         Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
                                 Intent gameover = new Intent(getApplicationContext(), com.apps.kunalfarmah.realtimetictactoe.gameover_online.class);
                                 gameover.putExtra("isHost", ishost);
-                                gameover.putExtra("Time",min.getText()+" : "+sec.getText());
+                                gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
+                                gameover.putExtra("Crash", false);
+                                gameover.putExtra("difficulty",difficulty);
+
                                 startActivity(gameover);
                             }
                         }, 1400);
                     }
-
 
 
                 } catch (Exception e) {
@@ -671,76 +778,27 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
-        //Declare the timer
-        Timer t = new Timer();
-
-
-        //Set the schedule function and rate
-        // code to run a timer in game
-        t.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        min.setText(String.valueOf(minutes));
-                        if(seconds<10)
-                        sec.setText("0"+String.valueOf(seconds));
-                        else
-                            sec.setText(String.valueOf(seconds));
-                        seconds += 1;
-
-                        if(seconds == 59 )
-                        {
-                            seconds=0;
-                            minutes+=1;
-                            min.setText(String.valueOf(minutes));
-
-                            if(seconds<10)
-                                sec.setText("0"+String.valueOf(seconds));
-                            else
-                                sec.setText(String.valueOf(seconds));
-
-                            seconds += 1;
-
-                        }
-
-
-
-                    }
-
-                });
-            }
-
-        }, 0, 1000);
 
 
 
 
-        ref = mdata.getReference("Moves");
         ref.addChildEventListener(movelistener);
 
 
-
     }
-
-
 
 
     @Override
     public void onClick(View v) {
 
 
-
-        movescount.setText("Moves : "+(steps+1));
-
-
-       // ref.addChildEventListener(movelistener);
+        movescount.setText("Moves : " + (steps + 1));
 
 
-       // mdata = FirebaseDatabase.getInstance();
+        // ref.addChildEventListener(movelistener);
+
+
+        // mdata = FirebaseDatabase.getInstance();
 
 
         //implementing onClick only once for all buttons by using their IDs
@@ -754,7 +812,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                 // host always takes X (1)
                 if (ishost.equalsIgnoreCase("True")) {
-
 
                     imagesbox img1 = new imagesbox(1, 1);
                     ref.getDatabase().getReference("Moves").child("img1").setValue(img1);
@@ -884,20 +941,17 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.imageView6:
                 ++steps;
-
                 // host always takes X (1)
                 if (ishost.equalsIgnoreCase("True")) {
                     imagesbox img6 = new imagesbox(6, 1);
                     ref.getDatabase().getReference("Moves").child("img6").setValue(img6);
                     moves[1][2] = 1;
-
                 }
                 // away always takes O (0)
                 else {
                     imagesbox img6 = new imagesbox(6, 0);
                     ref.getDatabase().getReference("Moves").child("img6").setValue(img6);
                     moves[1][2] = 0;
-
                 }
 
                 if (host_turn)
@@ -982,11 +1036,9 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
 // one player needs min 3 moves to win
-        if(steps>=3)
-        {
-            win = winner(pl1,pl2);
+        if (steps >= 3) {
+            win = winner(pl1, pl2);
         }
 
         if (win) {
@@ -1012,20 +1064,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
         // if all turns are done and still no winner, then simply exit saying match drawn and start gameover activity with a delay of 1.4 seconds
-        if (steps >=5 && !win) {
+        if (steps >= 5 && !win) {
 
             iswin.setValue("Draw");
 
         }
     }
-
-
-
-
-
-
 
 
     // function to check teh winning cases after 5th turn
@@ -1036,30 +1081,30 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[0][1] && moves[0][1] == moves[0][2]) {
             if (moves[0][0] == 0) {
-               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_SHORT).show();
                 return true;
             } else if (moves[0][0] == 1) {
-              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[1][0] != -1 && moves[1][0] == moves[1][1] && moves[1][1] == moves[1][2]) {
             if (moves[1][0] == 0) {
-              //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[1][0] == 1) {
-             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[2][0] != -1 && moves[2][0] == moves[2][1] && moves[2][1] == moves[2][2]) {
             if (moves[2][0] == 0) {
-             //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[2][0] == 1) {
-             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1068,10 +1113,10 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][0] && moves[1][0] == moves[2][0]) {
             if (moves[0][0] == 0) {
-               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][0] == 1) {
-              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1079,20 +1124,20 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][1] != -1 && moves[0][1] == moves[1][1] && moves[1][1] == moves[2][1]) {
             if (moves[0][1] == 0) {
-               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][1] == 1) {
-              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][2] && moves[1][2] == moves[2][2]) {
             if (moves[0][2] == 0) {
-               // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][2] == 1) {
-              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1101,10 +1146,10 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][0] != -1 && moves[0][0] == moves[1][1] && moves[1][1] == moves[2][2]) {
             if (moves[0][0] == 0) {
-              //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][0] == 1) {
-              //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
@@ -1113,15 +1158,15 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
             if (moves[0][2] == 0) {
-             //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             } else if (moves[0][2] == 1) {
-             //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
 
-        return  false;
+        return false;
     }
 
 
@@ -1129,25 +1174,30 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStop() {
         super.onStop();
 
+//        crash.setValue(true);
+//        t.cancel();
+//        t.purge();
+
         // resetting the database as -1 when game finishes
 
         ref.removeEventListener(movelistener);
         iswin.removeValue();
-//        connectedRef.removeValue();
-  //      lostConnection.removeValue();
-
+       // crash.setValue(true);
         setDefaults();
-
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+//        t.cancel();
+//        t.purge();
         mdata.goOffline();
+        crash.setValue(true);
+        setDefaults();
     }
 
-    private void settingclicklisteners(){
+    private void settingclicklisteners() {
         i1.setOnClickListener(this);
         i2.setOnClickListener(this);
         i3.setOnClickListener(this);
@@ -1159,8 +1209,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         i9.setOnClickListener(this);
     }
 
-    void setDefaults(){
-        imagesbox defaultvals = new imagesbox(-1,-1);
+    void setDefaults() {
+        imagesbox defaultvals = new imagesbox(-1, -1);
         ref.getDatabase().getReference("Moves");
         ref.child("img1").setValue(defaultvals);
         ref.child("img2").setValue(defaultvals);
@@ -1171,5 +1221,22 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         ref.child("img7").setValue(defaultvals);
         ref.child("img8").setValue(defaultvals);
         ref.child("img9").setValue(defaultvals);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        crash.setValue(true);
+        t.cancel();
+        t.purge();
+
+    }
+
+    private void interrupted(){
+        ref.removeEventListener(movelistener);
+        iswin.removeValue();
+        ref.removeValue();
+        mdata.goOffline();
+        setDefaults();
     }
 }

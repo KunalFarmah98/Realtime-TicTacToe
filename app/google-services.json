@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "726859166683",
+    "firebase_url": "https://realtimetictactoe-6e7e1.firebaseio.com",
+    "project_id": "realtimetictactoe-6e7e1",
+    "storage_bucket": "realtimetictactoe-6e7e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726859166683:android:0d56f43fd8dd61b6",
+        "android_client_info": {
+          "package_name": "com.apps.kunalfarmah.realtimetictactoe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726859166683-o9lmin9vo9kk9ihvdag6r12one0gmvr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.kunalfarmah.realtimetictactoe",
+            "certificate_hash": "16dbd98ff40e0e810ca1a458d25b860c667a5132"
+          }
+        },
+        {
+          "client_id": "726859166683-afkb9q4s5qbk5oegkhmf4v62k4ctk9vr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8vdqstL2gb6ONCcSJTM67Hz8wC31dOiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726859166683-afkb9q4s5qbk5oegkhmf4v62k4ctk9vr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -237,7 +237,7 @@ public class EnterActivity extends AppCompatActivity {
     public boolean hasActiveInternetConnection(Context context) {
         if (isNetworkAvailable()) {
 
-            // forcefully using network on main threaad
+            // forcefully using network on main thread
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
             StrictMode.setThreadPolicy(policy);
@@ -259,7 +259,10 @@ public class EnterActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }
 
 

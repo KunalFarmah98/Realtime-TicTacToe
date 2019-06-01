@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:text="Player 1 : X"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/host"
@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:text="Player 2 : O"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/away"

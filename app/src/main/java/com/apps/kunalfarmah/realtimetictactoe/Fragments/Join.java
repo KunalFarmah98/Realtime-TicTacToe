@@ -4,6 +4,7 @@ package com.apps.kunalfarmah.realtimetictactoe.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,28 +12,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.apps.kunalfarmah.realtimetictactoe.onlineActivity;
 import com.example.kunalfarmah.realtimetictactoe.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Join extends Fragment {
-    
+
 
     FirebaseDatabase mDatabase;
-    DatabaseReference mref;
+    DatabaseReference mref, awayRef, diffRef;
+    FirebaseUser user;
+    RadioButton d1, d2, d3;
+    int difficulty;
+    boolean start;
 
     EditText token;
     Button play;
+
     public Join() {
         // Required empty public constructor
     }
@@ -42,22 +53,77 @@ public class Join extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View v = inflater.inflate(R.layout.fragment_join, container, false);
+        View v = inflater.inflate(R.layout.fragment_join, container, false);
         token = v.findViewById(R.id.token1);
         play = v.findViewById(R.id.play);
 
+        d1 = v.findViewById(R.id.d1);
+        d2 = v.findViewById(R.id.d2);
+        d3 = v.findViewById(R.id.d3);
+
+
+        d1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                difficulty = 1;
+            }
+        });
+
+
+        d2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                difficulty = 2;
+            }
+        });
+
+
+        d3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                difficulty = 3;
+            }
+        });
+
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mref = mDatabase.getReference("Code");
+        diffRef = mDatabase.getReference("Difficulty");
 
         //final String val = token.getText().toString();
 
         // storing the token in the db
 
 
-
         play.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mDatabase = FirebaseDatabase.getInstance();
-                mref = mDatabase.getReference("Code");
+            public void onClick(final View v) {
+
+                if (difficulty == 0) {
+                    Toast.makeText(getContext(), "Please Select a Difficulty Level", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                diffRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int diff = dataSnapshot.getValue(int.class);
+                        if (diff != difficulty) {
+                            start = false;
+                            Toast.makeText(getActivity(), "Difficulties Don't Match!!", Toast.LENGTH_SHORT).show();
+                        } else
+                            start = true;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+
+
                 // Read from the database
                 mref.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -65,26 +131,35 @@ public class Join extends Fragment {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
 
-                        try {
-                            String value = (String) dataSnapshot.getValue();
+                        if (start) {
+                            try {
+                                String value = (String) dataSnapshot.getValue();
+                                Log.d("value", value);
 
 
-                            if (token.getText().toString().equals(value)) {
-                                Toast.makeText(getContext(), "Paired", Toast.LENGTH_SHORT).show();
+                                if (token.getText().toString().equals(value)) {
+                                    Toast.makeText(getContext(), "Paired", Toast.LENGTH_SHORT).show();
 
-                                // updating code as play which will in turn start the game for friend and starting game for urself
+                                    // updating code as play which will in turn start the game for friend and starting game for urself
 
-                                mref.getDatabase().getReference("Code").setValue("Play");
+                                    mref.setValue("Play");
 
-                                Intent start = new Intent(getContext(), onlineActivity.class);
-                                start.putExtra("isHost","False");
+                                    Intent start = new Intent(getContext(), onlineActivity.class);
+//                                    start.setFlags(FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                    start.putExtra("isHost", "False");
+                                    start.putExtra("difficulty", difficulty);
+                                    startActivity(start);
+                                    getActivity().finish();
 
-                                startActivity(start);
-                            } else if(!token.getText().toString().equals(value) && !value.equalsIgnoreCase("Play")){
-                                Toast.makeText(getContext(), "Please Enter Correct Code", Toast.LENGTH_SHORT).show();
+
+                                } else if (!token.getText().toString().equals(value) && !value.equalsIgnoreCase("Play")) {
+                                    Toast.makeText(getContext(), "Please Enter Correct Code", Toast.LENGTH_SHORT).show();
+                                }
+                                //Log.d(TAG, "Value is: " + value);
+                            } catch (Exception e) {
                             }
-                            //Log.d(TAG, "Value is: " + value);
-                        } catch (Exception e) {
+                        } else {
+
                         }
                     }
 
@@ -96,10 +171,39 @@ public class Join extends Fragment {
                     }
                 });
 
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                awayRef = mDatabase.getReference("AwayName");
+                awayRef.setValue(user.getDisplayName());
+
+
             }
         });
 
-       return v;
+
+        return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //   awayRef.removeValue();
+        //    mref.removeValue();
+        //mDatabase.goOffline();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //  awayRef.removeValue();
+        // mref.removeValue();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        // awayRef.removeValue();
+        //    mref.removeValue();
+
+    }
 }
+

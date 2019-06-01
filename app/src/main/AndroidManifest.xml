@@ -14,7 +14,8 @@
 
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.EnterActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,15 +24,21 @@
         </activity>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.startActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"/>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"/>
         <activity
             android:name="com.apps.kunalfarmah.realtimetictactoe.gameover"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity" />
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"></activity>
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"/>
+
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity"
+            android:excludeFromRecents="true"/>
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"
+            android:excludeFromRecents="true"></activity>
 
     </application>
 
