@@ -54,6 +54,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     TextView movescount;
     LinearLayout timer;
 
+    static boolean  isover;
+
     Timer t;
 
 
@@ -114,6 +116,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         timepref = getApplicationContext().getSharedPreferences("timeval",MODE_PRIVATE);
         medit = timepref.edit();
+
+        isover = false;
 
 
         difficulty = getIntent().getIntExtra("difficulty",2);
@@ -208,8 +212,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     timeval =-1;
 
                     Toast.makeText(getApplicationContext(), "A User left the server :(. Please restart the game and authenticate to play again", Toast.LENGTH_SHORT).show();
-//                    ActivityCompat.finishAffinity(onlineActivity.this);
-//                    finish();
 
                 }
             }
@@ -236,21 +238,25 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         if(difficulty==1) {
             seconds = 20;
+            timeval = seconds;
         }
         else if(difficulty==2){
             seconds =15;
+            timeval = seconds;
         }
         else if(difficulty==3){
             seconds=10;
+            timeval = seconds;
         }
         else {
             seconds=20;
+            timeval = seconds;
         }
 
         sec.setText(String.valueOf(seconds));
 
 
-        timeval = seconds;
+
 
 
         //Set the schedule function and rate
@@ -280,6 +286,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
                             t.cancel();
                             t.purge();
+                            isover =true;
 //                            timeval = seconds;
 
                             new Handler().postDelayed(new Runnable() {
@@ -290,7 +297,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                     gameover.putExtra("Time", min.getText() + " : " + seconds);
                                     gameover.putExtra("Crash", false);
                                     gameover.putExtra("difficulty",difficulty);
-
+                                    isover =true;
+                                    finish();
                                     startActivity(gameover);
 
 
@@ -704,6 +712,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                 try {
 
                   //  timeval =seconds;
+                    isover= true;
                     String hostname = player1.getText().toString();
                     String awayname = player2.getText().toString();
                     int i1 = hostname.indexOf(":");
@@ -725,7 +734,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() +" : "+ ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-//
+//                                    finish();
 
                                 startActivity(gameover);
                             }
@@ -742,6 +751,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
+//                                finish();
 
                                 startActivity(gameover);
                             }
@@ -758,6 +768,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
+//                                finish();
 
                                 startActivity(gameover);
                             }
@@ -1174,15 +1185,18 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStop() {
         super.onStop();
 
-//        crash.setValue(true);
-//        t.cancel();
-//        t.purge();
+        t.cancel();
+        t.purge();
+        if(!isover)
+            crash.setValue(true);
 
         // resetting the database as -1 when game finishes
 
         ref.removeEventListener(movelistener);
         iswin.removeValue();
-       // crash.setValue(true);
+
+
+
         setDefaults();
 
     }
@@ -1190,10 +1204,10 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        t.cancel();
-//        t.purge();
-        mdata.goOffline();
-        crash.setValue(true);
+        t.cancel();
+        t.purge();
+        if(!isover)
+            crash.setValue(true);
         setDefaults();
     }
 
@@ -1225,18 +1239,16 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        crash.setValue(true);
-        t.cancel();
-        t.purge();
 
+        try {
+            super.onBackPressed();
+            crash.setValue(true);
+            t.cancel();
+            t.purge();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    private void interrupted(){
-        ref.removeEventListener(movelistener);
-        iswin.removeValue();
-        ref.removeValue();
-        mdata.goOffline();
-        setDefaults();
-    }
 }

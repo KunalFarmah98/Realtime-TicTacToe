@@ -101,7 +101,7 @@ public class Host extends Fragment {
 
         mref = mDatabase.getReference("Code");
 
-        diffRef = mDatabase.getReference("TimeLimit");
+        diffRef = mDatabase.getReference("Difficulty");
 
 
         Continue.setOnClickListener(new View.OnClickListener() {
