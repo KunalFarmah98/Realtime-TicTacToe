@@ -209,7 +209,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                     t.cancel();
                     t.purge();
-                    timeval =-1;
+                    isover = true;
+//                    timeval =-1;
 
                     Toast.makeText(getApplicationContext(), "A User left the server :(. Please restart the game and authenticate to play again", Toast.LENGTH_SHORT).show();
 
@@ -276,6 +277,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                         Log.d("timeval", String.valueOf(timeval));
                         min.setText(String.valueOf(minutes));
+                        isover = false;
                         if (timeval < 10)
                             sec.setText("0" + timeval);
                         else
@@ -283,10 +285,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                         timeval = timeval - 1;
 
                         if (timeval == 0) {
+                            isover =true;
+
                             Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
                             t.cancel();
                             t.purge();
-                            isover =true;
+//                            finish();
+
 //                            timeval = seconds;
 
                             new Handler().postDelayed(new Runnable() {
@@ -724,6 +729,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     if (winner.equalsIgnoreCase("Host")) {
                         t.cancel();
                         t.purge();
+                        isover= true;
+
                         Toast.makeText(getApplicationContext(), hostname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -734,7 +741,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() +" : "+ ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-//                                    finish();
+                                    finish();
 
                                 startActivity(gameover);
                             }
@@ -742,6 +749,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     } else if (winner.equalsIgnoreCase("Away")) {
                         t.cancel();
                         t.purge();
+                        isover= true;
+
                         Toast.makeText(getApplicationContext(), awayname + " Wins", Toast.LENGTH_SHORT).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -751,7 +760,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-//                                finish();
+                                finish();
 
                                 startActivity(gameover);
                             }
@@ -759,6 +768,8 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                     } else if (winner.equalsIgnoreCase("Draw")) {
                         t.cancel();
                         t.purge();
+                        isover= true;
+
                         Toast.makeText(getApplicationContext(), "Drawn!!", Toast.LENGTH_LONG).show();
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -768,7 +779,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-//                                finish();
+                                finish();
 
                                 startActivity(gameover);
                             }
@@ -1181,6 +1192,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if(!isover)
+//        crash.setValue(true);
+//    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -1237,12 +1255,18 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         ref.child("img9").setValue(defaultvals);
     }
 
+
+
     @Override
     public void onBackPressed() {
 
         try {
             super.onBackPressed();
+            if(!isover)
             crash.setValue(true);
+            if(isover){
+                finish();
+            }
             t.cancel();
             t.purge();
         }
@@ -1251,4 +1275,15 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isover=false;
+    }
+
+//    @Override
+//    protected void onRestart() {
+//        isover = false;
+//        super.onRestart();
+//    }
 }

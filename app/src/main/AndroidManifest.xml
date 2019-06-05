@@ -36,7 +36,7 @@
             android:excludeFromRecents="true"/>
 
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity"
-            android:excludeFromRecents="false"/>
+            android:excludeFromRecents="true"/>
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"
             android:excludeFromRecents="true"></activity>
 

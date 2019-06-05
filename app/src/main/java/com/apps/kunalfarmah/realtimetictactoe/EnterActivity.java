@@ -117,7 +117,7 @@ public class EnterActivity extends AppCompatActivity {
 
                     // if user is logged in continue
                     if (user != null) {
-                        Toast.makeText(getApplicationContext(), "Signed In", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Welcome "+user.getDisplayName()+ " :)", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -189,7 +189,7 @@ public class EnterActivity extends AppCompatActivity {
                catch (Exception e){}
 
                 if (user != null) {
-                    Toast.makeText(getApplicationContext(), "Signed In Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Signed In Successfully as "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(),"Please Sign In",Toast.LENGTH_SHORT).show();
 

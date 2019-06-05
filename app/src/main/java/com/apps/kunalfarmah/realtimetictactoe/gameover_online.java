@@ -38,6 +38,8 @@ public class gameover_online extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameover);
 
+        onlineActivity.isover = true;
+
         time = findViewById(R.id.time);
         ImageButton replay = findViewById(R.id.repeat);
         final ImageButton close = findViewById(R.id.close);
