@@ -69,92 +69,89 @@ public class gameover_online extends AppCompatActivity {
 /*
                 // this function will close the app
                 ActivityCompat.finishAffinity(gameover_online.this);
-                System.exit(0)*/;
+                System.exit(0)*/
             }
         });
 
 
 
-        final String ishost = getIntent().getSerializableExtra("isHost").toString();
+        try {
+            final String ishost = getIntent().getSerializableExtra("isHost").toString();
 
-        final String timeval = getIntent().getStringExtra("Time");
+            final String timeval = getIntent().getStringExtra("Time");
 
-        time.setText("Time : "+ timeval);
-
-
-        mdata =FirebaseDatabase.getInstance();
-        closeref = mdata.getReference("isClosed");
-        closeref.setValue(false);
-        restartref= mdata.getReference("isRestarted");
-        restartref.setValue(false);
-
-        restartref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                try {
-                    Boolean restarted = dataSnapshot.getValue(Boolean.class);
+            time.setText("Time : " + timeval);
 
 
-                    if (restarted) {
+            mdata = FirebaseDatabase.getInstance();
+            closeref = mdata.getReference("isClosed");
+            closeref.setValue(false);
+            restartref = mdata.getReference("isRestarted");
+            restartref.setValue(false);
 
-                        if (hasActiveInternetConnection(getApplicationContext())) {
-                            Intent start = new Intent(getApplicationContext(), onlineActivity.class);
-                            start.putExtra("isHost", ishost);
-                            start.putExtra("difficulty", difficulty);
-                            startActivity(start);
-                            //finish();
-                           // restartref.setValue(false);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Please check your Internet Connection", Toast.LENGTH_SHORT).show();
+            restartref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    try {
+                        Boolean restarted = dataSnapshot.getValue(Boolean.class);
+
+
+                        if (restarted) {
+
+                            if (hasActiveInternetConnection(getApplicationContext())) {
+                                Intent start = new Intent(getApplicationContext(), onlineActivity.class);
+                                start.putExtra("isHost", ishost);
+                                start.putExtra("difficulty", difficulty);
+                                startActivity(start);
+                                //finish();
+                                // restartref.setValue(false);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please check your Internet Connection", Toast.LENGTH_SHORT).show();
+                            }
                         }
+
+
+                    } catch (Exception e) {
                     }
-
-
-                } catch (Exception e) {
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        closeref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
+                }
+            });
+
+            closeref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
 
 
-                    Boolean closed = dataSnapshot.getValue(Boolean.class);
+                        Boolean closed = dataSnapshot.getValue(Boolean.class);
 
-                    if (closed) {
-                        ActivityCompat.finishAffinity(gameover_online.this);
-                        finish();
-                        System.exit(0);
+                        if (closed) {
+                            ActivityCompat.finishAffinity(gameover_online.this);
+                            finish();
+                            System.exit(0);
+                        }
+                    } catch (Exception e) {
                     }
-                } catch (Exception e) {
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
-
-
-
-
-        int i  =timeval.indexOf(':');
-        String min = timeval.substring(0,i-1);
-        if(min.equals("1")){
-            Toast.makeText(getApplicationContext(),"One or more players have lost connection to the server :(", Toast.LENGTH_SHORT).show();
         }
 
+         catch ( Exception e){
 
-    }
+            }
+
+        }
 
 //    public void restartActivity(){
 //        //finishing current activity and then restarting it

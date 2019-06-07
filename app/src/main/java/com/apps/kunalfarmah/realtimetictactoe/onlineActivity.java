@@ -16,10 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,17 +23,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Connection;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Semaphore;
 
 public class onlineActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int moves[][] = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+    int[][] moves = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
     ImageView i1;
     ImageView i2;
@@ -53,6 +44,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     TextView player2;
     TextView movescount;
     LinearLayout timer;
+
 
     static boolean  isover;
 
@@ -91,12 +83,6 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
     // a reference to a victory
     DatabaseReference iswin;
 
-    //a reference to detect loss in connection
-    // DatabaseReference connectedRef;
-
-    // DatabaseReference movesref;
-
-    //DatabaseReference lostConnection;
 
     ChildEventListener movelistener;
 
@@ -207,13 +193,13 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (crash == true) {
 
-                    t.cancel();
-                    t.purge();
-                    isover = true;
-//                    timeval =-1;
+//                    if(!isover) {
+                        t.cancel();
+                        t.purge();
+                        isover = true;
 
-                    Toast.makeText(getApplicationContext(), "A User left the server :(. Please restart the game and authenticate to play again", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(getApplicationContext(), "A User left the server :( Please restart the game to play again", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
 
@@ -222,15 +208,15 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        i1 = (ImageView) findViewById(R.id.imageView1);
-        i2 = (ImageView) findViewById(R.id.imageView2);
-        i3 = (ImageView) findViewById(R.id.imageView3);
-        i4 = (ImageView) findViewById(R.id.imageView4);
-        i5 = (ImageView) findViewById(R.id.imageView5);
-        i6 = (ImageView) findViewById(R.id.imageView6);
-        i7 = (ImageView) findViewById(R.id.imageView7);
-        i8 = (ImageView) findViewById(R.id.imageView8);
-        i9 = (ImageView) findViewById(R.id.imageView9);
+        i1 = findViewById(R.id.imageView1);
+        i2 = findViewById(R.id.imageView2);
+        i3 = findViewById(R.id.imageView3);
+        i4 = findViewById(R.id.imageView4);
+        i5 = findViewById(R.id.imageView5);
+        i6 = findViewById(R.id.imageView6);
+        i7 = findViewById(R.id.imageView7);
+        i8 = findViewById(R.id.imageView8);
+        i9 = findViewById(R.id.imageView9);
 
         setDefaults();
 
@@ -741,7 +727,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() +" : "+ ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-                                    finish();
+//                                    finish();
 
                                 startActivity(gameover);
                             }
@@ -760,7 +746,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-                                finish();
+//                                finish();
 
                                 startActivity(gameover);
                             }
@@ -779,7 +765,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c<10)?("0"+ c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty",difficulty);
-                                finish();
+//                                finish();
 
                                 startActivity(gameover);
                             }
@@ -1179,13 +1165,11 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
         // checks secondary diagonal
 
         if (moves[0][2] != -1 && moves[0][2] == moves[1][1] && moves[1][1] == moves[2][0]) {
+            //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
             if (moves[0][2] == 0) {
                 //   Toast.makeText(getApplicationContext(), pl1 + " Wins", Toast.LENGTH_LONG).show();
                 return true;
-            } else if (moves[0][2] == 1) {
-                //   Toast.makeText(getApplicationContext(), pl2 + " Wins", Toast.LENGTH_LONG).show();
-                return true;
-            }
+            } else return moves[0][2] == 1;
         }
 
         return false;
@@ -1195,37 +1179,58 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 //    @Override
 //    protected void onPause() {
 //        super.onPause();
-//        if(!isover)
-//        crash.setValue(true);
+//
+//        try {
+//            t.cancel();
+//            t.purge();
+//
+//            if (!isover)
+//                crash.setValue(true);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
 //    }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        t.cancel();
-        t.purge();
-        if(!isover)
-            crash.setValue(true);
-
-        // resetting the database as -1 when game finishes
-
-        ref.removeEventListener(movelistener);
-        iswin.removeValue();
+        try {
+            t.cancel();
+            t.purge();
+            if (!isover)
+                crash.setValue(true);
 
 
+            // resetting the database as -1 when game finishes
 
-        setDefaults();
+            ref.removeEventListener(movelistener);
+            iswin.removeValue();
+
+
+            setDefaults();
+        }
+
+        catch(Exception E){
+            E.printStackTrace();
+        }
+
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        t.cancel();
-        t.purge();
-        if(!isover)
-            crash.setValue(true);
+        try {
+            t.cancel();
+            t.purge();
+            if (!isover)
+                crash.setValue(true);
+        }
+        catch(Exception E){
+            E.printStackTrace();
+        }
         setDefaults();
     }
 
@@ -1262,24 +1267,28 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
 
         try {
             super.onBackPressed();
-            if(!isover)
-            crash.setValue(true);
-            if(isover){
-                finish();
-            }
+
             t.cancel();
             t.purge();
+
+            if(!isover)
+            crash.setValue(true);
+
+            mdata.goOnline();
+            throw new Exception("hey");
+
         }
         catch (Exception e){
+            finishAffinity();
             e.printStackTrace();
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isover=false;
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        isover=false;
+//    }
 
 //    @Override
 //    protected void onRestart() {

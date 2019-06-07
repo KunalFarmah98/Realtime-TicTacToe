@@ -99,83 +99,88 @@ public class Join extends Fragment {
             @Override
             public void onClick(final View v) {
 
-                if (difficulty == 0) {
-                    Toast.makeText(getContext(), "Please Select a Difficulty Level", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-                diffRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        int diff = dataSnapshot.getValue(int.class);
-                        if (diff != difficulty) {
-                            start = false;
-                            Toast.makeText(getActivity(), "Difficulties Don't Match!!", Toast.LENGTH_SHORT).show();
-                        } else
-                            start = true;
+                try {
+                    if (difficulty == 0) {
+                        Toast.makeText(getContext(), "Please Select a Difficulty Level", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
+                    diffRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            int diff = dataSnapshot.getValue(int.class);
+                            if (diff != difficulty) {
+                                start = false;
+                                Toast.makeText(getContext(), "Difficulties Don't Match!!", Toast.LENGTH_SHORT).show();
+                            } else
+                                start = true;
+                        }
 
-                });
-
-
-                // Read from the database
-                mref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-
-                        if (start) {
-                            try {
-                                String value = (String) dataSnapshot.getValue();
-                                Log.d("value", value);
-
-
-                                if (token.getText().toString().equals(value)) {
-                                    Toast.makeText(getContext(), "Paired", Toast.LENGTH_SHORT).show();
-
-                                    // updating code as play which will in turn start the game for friend and starting game for urself
-
-                                    mref.setValue("Play");
-
-                                    Intent start = new Intent(getContext(), onlineActivity.class);
-//                                    start.setFlags(FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                                    start.putExtra("isHost", "False");
-                                    start.putExtra("difficulty", difficulty);
-                                    startActivity(start);
-                                    getActivity().finish();
-
-
-                                } else if (!token.getText().toString().equals(value) && !value.equalsIgnoreCase("Play")) {
-                                    Toast.makeText(getContext(), "Please Enter Correct Code", Toast.LENGTH_SHORT).show();
-                                }
-                                //Log.d(TAG, "Value is: " + value);
-                            } catch (Exception e) {
-                            }
-                        } else {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-                    }
+
+                    });
 
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        // Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
+                    // Read from the database
+                    mref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
 
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                awayRef = mDatabase.getReference("AwayName");
-                awayRef.setValue(user.getDisplayName());
+                            if (start) {
+                                try {
+                                    String value = (String) dataSnapshot.getValue();
+                                    Log.d("value", value);
 
 
+                                    if (token.getText().toString().equals(value)) {
+                                        Toast.makeText(getContext(), "Paired", Toast.LENGTH_SHORT).show();
+
+                                        // updating code as play which will in turn start the game for friend and starting game for urself
+
+                                        mref.setValue("Play");
+
+                                        Intent start = new Intent(getContext(), onlineActivity.class);
+//                                    start.setFlags(FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                        start.putExtra("isHost", "False");
+                                        start.putExtra("difficulty", difficulty);
+                                        startActivity(start);
+                                        getActivity().finish();
+
+
+                                    } else if (!token.getText().toString().equals(value) && !value.equalsIgnoreCase("Play")) {
+                                        Toast.makeText(getContext(), "Please Enter Correct Code", Toast.LENGTH_SHORT).show();
+                                    }
+                                    //Log.d(TAG, "Value is: " + value);
+                                } catch (Exception e) {
+                                }
+                            } else {
+
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            // Log.w(TAG, "Failed to read value.", error.toException());
+                        }
+                    });
+
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    awayRef = mDatabase.getReference("AwayName");
+                    awayRef.setValue(user.getDisplayName());
+
+
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -204,6 +209,12 @@ public class Join extends Fragment {
         // awayRef.removeValue();
         //    mref.removeValue();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDatabase.goOnline();
     }
 }
 

@@ -17,6 +17,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="@dimen/_5sdp"
         android:textStyle="bold"
+        android:layout_marginTop="@dimen/_15sdp"
         android:text="YOUR DEVELOPER"
         android:textColor="#ffffff"
         android:textAlignment="center"
@@ -28,18 +29,19 @@
         android:layout_below="@+id/dev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="This App has been designed by a first time Android Developer KUNAL FARMAH."
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="Developed by Kunal Farmah using Firebase"
         android:textSize="@dimen/_15sdp" />
 
     <TextView
         android:layout_marginTop="@dimen/_5sdp"
         android:id="@+id/we"
+        android:visibility="gone"
         android:layout_below="@+id/info1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_15sdp"
-        android:text="Currently I am persuing B.Tech in Information Technology from Delhi Technological University"/>
+        android:text="Currently I am persuing B.Tech in Information Technology from Delhi Technological University."/>
     <TextView
         android:id="@+id/info2"
         android:layout_width="wrap_content"
@@ -47,9 +49,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/we"
         android:layout_marginBottom="7dp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:text="I have tested this app to the best of my knowlege.
-If anyone finds a bug or a crash at some point, feel free to reach me at the undersigned"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="Since this is the First Version of the app, it may contain certain bugs that may have escaped my tests. If you find any feel free to write to me at my email."
         android:textSize="@dimen/_15sdp" />
 
 
@@ -61,7 +62,7 @@ If anyone finds a bug or a crash at some point, feel free to reach me at the und
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/Name"
         android:padding="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:text="Cheers to ALL :)"
         android:textAlignment="center"
         android:textSize="@dimen/_15sdp" />
@@ -95,7 +96,7 @@ If anyone finds a bug or a crash at some point, feel free to reach me at the und
         android:layout_height="@dimen/_104sdp"
         android:layout_alignParentStart="true"
         android:layout_below="@id/info2"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:src="@drawable/me" />
 
 

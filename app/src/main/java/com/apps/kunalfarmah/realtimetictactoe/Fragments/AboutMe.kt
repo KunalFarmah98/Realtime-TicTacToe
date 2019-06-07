@@ -116,15 +116,6 @@ class AboutMe : Fragment() {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-//        activity!!.title = "ABOUT ME"
-
-    }
-
-
     override fun onStart() {
         super.onStart()
         activity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

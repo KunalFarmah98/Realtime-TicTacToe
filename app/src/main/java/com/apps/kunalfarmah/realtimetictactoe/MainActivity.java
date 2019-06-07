@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         pl2 = (String) intent.getSerializableExtra("player2");
 
 
-        t1 = (TextView) findViewById(R.id.textView);
-        t2 = (TextView) findViewById(R.id.textView2);
+        t1 = findViewById(R.id.textView);
+        t2 = findViewById(R.id.textView2);
 
         if (!pl1.equals("") && !pl2.equals("")) {
             t1.setText(pl1 + ": O");
@@ -59,17 +59,17 @@ public class MainActivity extends AppCompatActivity {
             pl2 = "Player 2";
         }
 
-        i1 = (ImageView) findViewById(R.id.imageView1);
-        i2 = (ImageView) findViewById(R.id.imageView2);
-        i3 = (ImageView) findViewById(R.id.imageView3);
-        i4 = (ImageView) findViewById(R.id.imageView4);
-        i5 = (ImageView) findViewById(R.id.imageView5);
-        i6 = (ImageView) findViewById(R.id.imageView6);
-        i7 = (ImageView) findViewById(R.id.imageView7);
-        i8 = (ImageView) findViewById(R.id.imageView8);
-        i9 = (ImageView) findViewById(R.id.imageView9);
-        o = (ImageView) findViewById(R.id.testo);
-        x = (ImageView) findViewById(R.id.testx);
+        i1 = findViewById(R.id.imageView1);
+        i2 = findViewById(R.id.imageView2);
+        i3 = findViewById(R.id.imageView3);
+        i4 = findViewById(R.id.imageView4);
+        i5 = findViewById(R.id.imageView5);
+        i6 = findViewById(R.id.imageView6);
+        i7 = findViewById(R.id.imageView7);
+        i8 = findViewById(R.id.imageView8);
+        i9 = findViewById(R.id.imageView9);
+        o = findViewById(R.id.testo);
+        x = findViewById(R.id.testx);
 
         Toast.makeText(getApplicationContext(), pl1 + " Goes first", Toast.LENGTH_SHORT).show();
 

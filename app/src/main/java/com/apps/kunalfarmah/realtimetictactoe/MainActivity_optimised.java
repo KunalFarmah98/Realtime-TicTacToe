@@ -1,7 +1,6 @@
 package com.apps.kunalfarmah.realtimetictactoe;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +62,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
     String pl1;
     String pl2;
 
-    int moves[][] = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
+    int[][] moves = {{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
 
     @Override
@@ -77,8 +76,8 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         pl2 = (String) intent.getSerializableExtra("player2");
 
 
-        t1 = (TextView) findViewById(R.id.textView);
-        t2 = (TextView) findViewById(R.id.textView2);
+        t1 = findViewById(R.id.textView);
+        t2 = findViewById(R.id.textView2);
 
         movescount = findViewById(R.id.moves);
 
@@ -107,15 +106,15 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
         awayicon = findViewById(R.id.away);
         awayicon.setVisibility(View.INVISIBLE);
 
-        i1 = (ImageView) findViewById(R.id.imageView1);
-        i2 = (ImageView) findViewById(R.id.imageView2);
-        i3 = (ImageView) findViewById(R.id.imageView3);
-        i4 = (ImageView) findViewById(R.id.imageView4);
-        i5 = (ImageView) findViewById(R.id.imageView5);
-        i6 = (ImageView) findViewById(R.id.imageView6);
-        i7 = (ImageView) findViewById(R.id.imageView7);
-        i8 = (ImageView) findViewById(R.id.imageView8);
-        i9 = (ImageView) findViewById(R.id.imageView9);
+        i1 = findViewById(R.id.imageView1);
+        i2 = findViewById(R.id.imageView2);
+        i3 = findViewById(R.id.imageView3);
+        i4 = findViewById(R.id.imageView4);
+        i5 = findViewById(R.id.imageView5);
+        i6 = findViewById(R.id.imageView6);
+        i7 = findViewById(R.id.imageView7);
+        i8 = findViewById(R.id.imageView8);
+        i9 = findViewById(R.id.imageView9);
 
 
         win1=  findViewById(R.id.win1);
@@ -166,7 +165,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                     public void run() {
                         min.setText(String.valueOf(minutes));
                         if(seconds<10)
-                            sec.setText("0"+String.valueOf(seconds));
+                            sec.setText("0"+ seconds);
                         else
                             sec.setText(String.valueOf(seconds));
                         seconds += 1;
@@ -178,7 +177,7 @@ public class MainActivity_optimised extends AppCompatActivity implements View.On
                             min.setText(String.valueOf(minutes));
 
                             if(seconds<10)
-                                sec.setText("0"+String.valueOf(seconds));
+                                sec.setText("0"+ seconds);
                             else
                                 sec.setText(String.valueOf(seconds));
 

@@ -7,7 +7,7 @@
     <application
         android:allowBackup="true"
         android:isGame="true"
-        android:label="Realtime tic tac toe"
+        android:label="Realtime TicTacToe"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -36,8 +36,10 @@
             android:excludeFromRecents="true"/>
 
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity"
+            android:screenOrientation="portrait"
             android:excludeFromRecents="true"/>
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"
+            android:screenOrientation="portrait"
             android:excludeFromRecents="true"></activity>
 
     </application>

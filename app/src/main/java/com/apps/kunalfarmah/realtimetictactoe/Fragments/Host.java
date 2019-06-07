@@ -108,71 +108,79 @@ public class Host extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (difficulty == 0) {
-                    Toast.makeText(getContext(), "Please Select a Difficulty Level", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                try {
 
-                diffRef.setValue(difficulty);
+                    if (difficulty == 0) {
+                        Toast.makeText(getContext(), "Please Select a Difficulty Level", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                // storing the token in the db
+                    diffRef.setValue(difficulty);
 
-                if (token.getText().toString().equals("") || token.getText().toString().equals(" ")) {
-                    hidden3.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("token", token.getText().toString());
-                    mref.setValue(token.getText().toString());
-                    hidden3.setVisibility(View.GONE);
-                    hidden1.setVisibility(View.VISIBLE);
-                    hidden2.setVisibility(View.VISIBLE);
+                    // storing the token in the db
 
-                    //  waiting for game to start
+                    if (token.getText().toString().equals("") || token.getText().toString().equals(" ")) {
+                        hidden3.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.d("token", token.getText().toString());
+                        mref.setValue(token.getText().toString());
+                        hidden3.setVisibility(View.GONE);
+                        hidden1.setVisibility(View.VISIBLE);
+                        hidden2.setVisibility(View.VISIBLE);
 
-                    mref = mDatabase.getReference("Code");
+                        //  waiting for game to start
+
+                        mref = mDatabase.getReference("Code");
 
 
-                    // setting the referrence to the Game
+                        // setting the referrence to the Game
 
-                    mref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
+                        mref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // This method is called once with the initial value and again
+                                // whenever data at this location is updated.
 
-                            try {
-                                String value = (String) dataSnapshot.getValue();
-                                Log.d("value", value);
-                                //  as soon as friend has paired, start the game
+                                try {
+                                    String value = (String) dataSnapshot.getValue();
+                                    Log.d("value", value);
+                                    //  as soon as friend has paired, start the game
 
-                                // if code is changed, start the game
-                                if (value.equals("Play")) {
+                                    // if code is changed, start the game
+                                    if (value.equals("Play")) {
 
-                                    Intent start = new Intent(getContext(), onlineActivity.class);
-                                    start.putExtra("isHost", "True");
-                                    start.putExtra("difficulty", difficulty);
-                                    startActivity(start);
-                                    getActivity().finish();
+                                        Intent start = new Intent(getContext(), onlineActivity.class);
+                                        start.putExtra("isHost", "True");
+                                        start.putExtra("difficulty", difficulty);
+                                        startActivity(start);
+                                        getActivity().finish();
 
+
+                                    }
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value;
-                        }
-                    });
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value;
+                            }
+                        });
+
+                    }
+
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    hostRef = mDatabase.getReference("HostName");
+                    hostRef.setValue(user.getDisplayName());
 
                 }
 
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                hostRef = mDatabase.getReference("HostName");
-                hostRef.setValue(user.getDisplayName());
-
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -203,5 +211,11 @@ public class Host extends Fragment {
         // hostRef.removeValue();
         //    mref.removeValue();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mDatabase.goOnline();
     }
 }
