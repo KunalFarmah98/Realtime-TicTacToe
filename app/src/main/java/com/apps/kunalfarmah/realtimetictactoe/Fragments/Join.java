@@ -106,15 +106,22 @@ public class Join extends Fragment {
                     }
 
 
+
                     diffRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             int diff = dataSnapshot.getValue(int.class);
-                            if (diff != difficulty) {
-                                start = false;
-                                Toast.makeText(getContext(), "Difficulties Don't Match!!", Toast.LENGTH_SHORT).show();
-                            } else
-                                start = true;
+
+                            try {
+                                if (diff != difficulty) {
+                                    start = false;
+                                    Toast.makeText(getContext(), "Difficulties Don't Match!!", Toast.LENGTH_SHORT).show();
+                                } else
+                                    start = true;
+                            }
+                            catch(Exception e) {
+                            }
+
                         }
 
                         @Override

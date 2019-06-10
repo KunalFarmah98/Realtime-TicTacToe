@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,27 +55,37 @@ public class EnterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.signout:
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getApplicationContext(),"Signed Out Successfully!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Signed Out Successfully!!", Toast.LENGTH_SHORT).show();
 
                 // removing all fragments after sign in
-                for(int i=0; i<getSupportFragmentManager().getBackStackEntryCount(); i++) {
+                for (int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i++) {
                     getSupportFragmentManager().popBackStack();
                 }
 
                 // if a fragemnt was open during sign out, remove it
-                if(fragments.getVisibility()==View.VISIBLE)
+                if (fragments.getVisibility() == View.VISIBLE)
                     fragments.setVisibility(View.GONE);
 
                 return true;
 
             case R.id.about_dev:
-                if(fragments.getVisibility()==View.GONE || fragments.getVisibility()==View.INVISIBLE)
+                if (fragments.getVisibility() == View.GONE || fragments.getVisibility() == View.INVISIBLE)
                     fragments.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,about).addToBackStack("about").commit();
-        default: return super.onOptionsItemSelected(item);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, about).addToBackStack("about").commit();
+
+            case R.id.privacy:
+                Uri webpage = Uri.parse("https://realtime-tictactoe.flycricket.io/privacy.html");
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -117,7 +128,7 @@ public class EnterActivity extends AppCompatActivity {
 
                     // if user is logged in continue
                     if (user != null) {
-                        Toast.makeText(getApplicationContext(), "Welcome "+user.getDisplayName()+ " :)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName() + " :)", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -138,8 +149,7 @@ public class EnterActivity extends AppCompatActivity {
 
 
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Please connect your device to the internet to continue :)", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -152,11 +162,10 @@ public class EnterActivity extends AppCompatActivity {
 
                 how_to_play play = new how_to_play();
                 fragments.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,play).addToBackStack("info").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, play).addToBackStack("info").commit();
             }
         });
     }
-
 
 
     @Override
@@ -164,12 +173,13 @@ public class EnterActivity extends AppCompatActivity {
         super.onBackPressed();
         // removing the fragment if back is pressed on the host or join screen
 
-       // fragment1.setVisibility(View.GONE);
+        // fragment1.setVisibility(View.GONE);
 
-        if(getSupportFragmentManager().getBackStackEntryCount()==0)
-        fragments.setVisibility(View.GONE);
-        else{}
-            //fragments.setVisibility(View.VISIBLE);
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+            fragments.setVisibility(View.GONE);
+        else {
+        }
+        //fragments.setVisibility(View.VISIBLE);
 
     }
 
@@ -183,15 +193,15 @@ public class EnterActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-               try{
-                   User = user.getDisplayName();
-               }
-               catch (Exception e){}
+                try {
+                    User = user.getDisplayName();
+                } catch (Exception e) {
+                }
 
                 if (user != null) {
-                    Toast.makeText(getApplicationContext(), "Signed In Successfully as "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Signed In Successfully as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(),"Please Sign In",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please Sign In", Toast.LENGTH_SHORT).show();
 
                     // Choose authentication providers
                     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -250,7 +260,7 @@ public class EnterActivity extends AppCompatActivity {
                 urlc.connect();
                 return (urlc.getResponseCode() == 200);
             } catch (IOException e) {
-               // Log.e(LOG_TAG, "Error checking internet connection", e);
+                // Log.e(LOG_TAG, "Error checking internet connection", e);
             }
         } else {
             //Log.d(LOG_TAG, "No network available!");
