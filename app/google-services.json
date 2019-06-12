@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "726859166683-6it0r85p3pv55tqkeabcrgtrbccv7p60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.kunalfarmah.realtimetictactoe",
+            "certificate_hash": "48dfbe5b51d0f447ea06a66f88be0408cbac35c1"
+          }
+        },
+        {
+          "client_id": "726859166683-g7btga7lv53m66rt4dtk4iuo9p4698un.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apps.kunalfarmah.realtimetictactoe",
+            "certificate_hash": "e0ebae29900b96f1df615a3f86323485ce28319f"
+          }
+        },
+        {
           "client_id": "726859166683-o9lmin9vo9kk9ihvdag6r12one0gmvr4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +49,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "726859166683-afkb9q4s5qbk5oegkhmf4v62k4ctk9vr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
