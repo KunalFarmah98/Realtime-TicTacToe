@@ -6,6 +6,7 @@
 <p align = "center">
   <img width="320" height="220" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/GooglePlayStore.png">
   </p>
+  
 
 ## Offline Mode:
 
@@ -13,6 +14,7 @@
 
 
  <p vspace = "20" align="center" >
+   <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152745.png">
     <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-153010.png" width =190 
   height = 320/>
   <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-153032.png">
@@ -28,10 +30,11 @@
 
 
  <p vspace = "20" align="center" >
+   <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152745.png">
     <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20181011-212854.png" width =190 
   height = 320/>
   <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152849.png">
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-1529157.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152915.png" width =190 
   height = 320/>
   <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152917.png" width =190 
   height = 320/>
@@ -49,5 +52,11 @@
 
 ## Made Competetive:
 
-* #### 3 competetive modes to test your proficiency of the game challenging youe friend to a game of 20 ,15 and 10 seconds.
+* #### 3 competetive modes to test your proficiency of the game challenging your friend to a game of 20 ,15 and 10 seconds.
+ <p vspace = "20" align="center" >
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152915.png" width =190 
+  height = 320/>
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/Screenshot_20190608-152917.png" width =190 
+  height = 320/>
+  </p>
 
