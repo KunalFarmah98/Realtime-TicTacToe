@@ -139,7 +139,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 hostName = dataSnapshot.getValue(String.class);
-                player1.setText(hostName + " : X");
+                player1.setText((hostName=="null" || hostName==null)?"Host":hostName + " : X");
                 Log.d("Host", hostName);
             }
 
@@ -156,7 +156,7 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 awayName = dataSnapshot.getValue(String.class);
-                player2.setText(awayName + " : O");
+                player2.setText((awayName=="null" || awayName==null)?"Away":awayName + " : X");
                 Log.d("Away", awayName);
             }
 
@@ -166,14 +166,31 @@ public class onlineActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-
         pl1 = hostName + " : X";
         pl2 = awayName + " : O";
+
+        if(pl1.equals("null : X")){
+            pl1 = "Host : X";
+        }
+
+        if(pl2.equals("null : O")){
+            pl2 = "Away : O";
+        }
+
+        if(player1.getText().toString().equals("null : X")){
+            player1.setText("Host : X");
+        }
+
+        if(player2.getText().toString().equals("null : O")){
+            player2.setText("Away : 0");
+        }
 
         // finding which one is host;
         ishost = getIntent().getSerializableExtra("isHost").toString();
 
         // setting host to be true for host and false for joiner
+
+
 
         turn = mdata.getReference("Host");
         turn.setValue(true);

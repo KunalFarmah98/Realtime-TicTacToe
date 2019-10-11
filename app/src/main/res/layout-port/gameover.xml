@@ -44,10 +44,10 @@
 
     <ImageButton
         android:id="@+id/close"
+        android:layout_below="@+id/repeat"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-
+        android:layout_marginTop="@dimen/_50sdp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="55dp"
         android:background="@drawable/exit_button_clicked"

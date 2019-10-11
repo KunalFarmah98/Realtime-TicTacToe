@@ -39,6 +39,7 @@ public class EnterActivity extends AppCompatActivity {
     Button offline;
     Button online;
     ImageButton info;
+    Menu menu;
     // a variable to check if we are inside teh host or join screen
     public static FrameLayout fragments;
 
@@ -128,7 +129,11 @@ public class EnterActivity extends AppCompatActivity {
 
                     // if user is logged in continue
                     if (user != null) {
-                        Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName() + " :)", Toast.LENGTH_SHORT).show();
+                        User = user.getDisplayName();
+                        if(User=="null"){
+                            User = "New User";
+                        }
+                        Toast.makeText(getApplicationContext(), "Welcome " + User + " :)", Toast.LENGTH_SHORT).show();
 
                     } else {
 
@@ -195,11 +200,15 @@ public class EnterActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 try {
                     User = user.getDisplayName();
+                    if(User=="null"){
+                        User = "New User";
+                    }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 if (user != null) {
-                    Toast.makeText(getApplicationContext(), "Signed In Successfully as " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Signed In Successfully as " +User, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Please Sign In", Toast.LENGTH_SHORT).show();
 
@@ -247,10 +256,15 @@ public class EnterActivity extends AppCompatActivity {
     public boolean hasActiveInternetConnection(Context context) {
         if (isNetworkAvailable()) {
 
-            // forcefully using network on main thread
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            try {
+                // forcefully using network on main thread
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-            StrictMode.setThreadPolicy(policy);
+                StrictMode.setThreadPolicy(policy);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
             try {
                 HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
@@ -260,7 +274,7 @@ public class EnterActivity extends AppCompatActivity {
                 urlc.connect();
                 return (urlc.getResponseCode() == 200);
             } catch (IOException e) {
-                // Log.e(LOG_TAG, "Error checking internet connection", e);
+                e.printStackTrace();
             }
         } else {
             //Log.d(LOG_TAG, "No network available!");
