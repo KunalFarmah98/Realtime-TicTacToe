@@ -12,6 +12,7 @@
         android:isGame="true"
         android:label="Realtime TicTacToe"
         android:roundIcon="@drawable/logo"
+        android:icon="@drawable/logo"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">

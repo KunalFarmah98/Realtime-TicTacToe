@@ -46,7 +46,7 @@ public class Interstitial extends Fragment {
 
                 Join join = new Join();
                 Host host = new Host();
-               act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,host).addToBackStack("Host").commit();
+               act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,host).commit();
             }
         });
 
@@ -56,7 +56,7 @@ public class Interstitial extends Fragment {
 
 
                 Join join = new Join();
-                act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,join).addToBackStack("Join").commit();
+                act.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,join).commit();
             }
         });
 
