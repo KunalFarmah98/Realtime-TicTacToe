@@ -45,7 +45,7 @@
             android:excludeFromRecents="true"/>
         <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"
             android:screenOrientation="portrait"
-            android:excludeFromRecents="true"></activity>
+            android:excludeFromRecents="true"/>
 
     </application>
 

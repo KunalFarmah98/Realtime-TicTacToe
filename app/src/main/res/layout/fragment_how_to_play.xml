@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:padding="15dp"
                 android:text="@string/how_to_play1"
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="17sp" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:padding="15dp"
                 android:text="@string/how_to_play2"
 
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="17sp" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:padding="15dp"
                 android:text="@string/how_to_play3"
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="17sp" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:padding="15dp"
                 android:gravity="bottom"
                 android:text="@string/how_to_play4"
-                android:textColor="#000000"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="17sp" />
 
         </LinearLayout>
@@ -88,7 +88,7 @@
         android:padding="@dimen/_5sdp"
         android:text="@string/smile"
         android:textAlignment="center"
-        android:textColor="#ffff"
+        android:textColor="#ffffff"
         android:textSize="@dimen/_20sdp" />
 
 

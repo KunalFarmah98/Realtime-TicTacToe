@@ -32,7 +32,7 @@
         android:layout_marginTop="263dp"
         android:backgroundTint="@color/colorPrimary"
         android:hint="Player 1 Name"
-        android:textColor="#f8f8ff"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="50dp" />
 
     <EditText
@@ -44,7 +44,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:layout_marginBottom="345dp"
         android:hint="Player 2 Name"
-        android:textColor="#f8f8ff"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="50dp" />
 
 

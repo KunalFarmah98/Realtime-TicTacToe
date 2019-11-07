@@ -16,7 +16,7 @@
         android:gravity="center"
         android:shadowColor="@color/colorPrimaryDark"
         android:text="GAME OVER"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="60dp" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time: 0:00"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_below="@id/over"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_20sdp"
@@ -40,7 +40,7 @@
         android:layout_marginTop="235dp"
         android:background="@drawable/replay_buttton_clicked"
         android:scaleType="fitXY"
-        android:src="@drawable/repeat" />
+        android:src="@drawable/ic_replay_black_24dp" />
 
     <ImageButton
         android:id="@+id/close"
@@ -52,6 +52,6 @@
         android:layout_marginBottom="55dp"
         android:background="@drawable/exit_button_clicked"
         android:scaleType="fitXY"
-        android:src="@drawable/x" />
+        android:src="@drawable/ic_close_black_24dp" />
 
 </RelativeLayout>

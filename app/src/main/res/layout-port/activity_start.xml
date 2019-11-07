@@ -32,7 +32,7 @@
         android:layout_marginTop="162dp"
         android:maxLength="10"
         android:hint="Player 1 Name"
-        android:textColor="#f8f8ff"
+        android:textColor="?android:attr/textColorPrimary"
         android:backgroundTint="@color/colorPrimary"
         android:textSize="30sp" />
 
@@ -46,7 +46,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:hint="Player 2 Name"
         android:maxLength="10"
-        android:textColor="#f8f8ff"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="30sp" />
 
 
