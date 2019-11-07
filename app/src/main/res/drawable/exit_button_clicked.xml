@@ -6,6 +6,4 @@
     <item android:drawable="@color/color_exitpressed"
         android:state_focused="true"/>
 
-    <item android:drawable="@color/colorAccent"/>
-
 </selector>

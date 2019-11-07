@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/_5sdp"
     android:clickable="true"
-    android:background="@color/colorAccent">
+    >
 
     <TextView
         android:background="@color/colorPrimaryDark"
@@ -125,7 +125,6 @@
             android:layout_gravity="end"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toStartOf="@+id/dev"
-            android:background="@color/colorAccent"
             android:src="@drawable/gmail" />
 
         <TextView
@@ -138,7 +137,6 @@
             android:textColor="?android:attr/textColorPrimary"
             android:layout_marginLeft="@dimen/_15sdp"
             android:gravity="center"
-            android:background="@color/colorAccent"
             android:text="kunalfarmah98@gmail.com"
             android:textSize="@dimen/_15sdp" />
 

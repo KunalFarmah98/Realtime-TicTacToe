@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
 
@@ -17,7 +18,7 @@ public class startActivity extends AppCompatActivity implements Serializable {
     EditText e1;
     EditText e2;
 
-    ImageButton i1;
+    ImageView i1;
 
 
     @Override

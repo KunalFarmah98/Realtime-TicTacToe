@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00bfff"
     tools:context="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised">
 
 
@@ -24,7 +23,7 @@
             android:text="Player 1 : X"
             android:textColor="?android:attr/textColorPrimary"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="25dp" />
 
         <ImageView
             android:id="@+id/host"
@@ -44,7 +43,7 @@
             android:text="Player 2 : O"
             android:textColor="?android:attr/textColorPrimary"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="25dp" />
 
         <ImageView
             android:id="@+id/away"
@@ -74,14 +73,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -89,14 +88,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -104,7 +103,7 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
     </LinearLayout>
 
@@ -120,7 +119,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="#0000ff" />
+        android:background="#000000" />
 
     <View
         android:id="@+id/win1"
@@ -133,7 +132,7 @@
         android:layout_gravity="center"
         android:visibility="gone"
         android:layout_marginTop="119dp"
-        android:background="#0000ff" />
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/grid2"
@@ -150,14 +149,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="302dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -165,14 +164,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -180,7 +179,7 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
     </LinearLayout>
 
     <View
@@ -192,7 +191,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/grid2"
         android:layout_gravity="center"
-        android:background="#0000ff" />
+        android:background="#000000" />
 
     <View
         android:id="@+id/win2"
@@ -205,7 +204,7 @@
         android:layout_gravity="center"
         android:visibility="gone"
         android:layout_marginTop="224dp"
-        android:background="#0000ff" />
+        android:background="#000000" />
 
 
     <LinearLayout
@@ -221,14 +220,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView8"
@@ -236,14 +235,14 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
 
         <View
             android:layout_width="7dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
             android:layout_marginTop="50sp"
-            android:background="#0000ff" />
+            android:background="#000000" />
 
         <ImageView
             android:id="@+id/imageView9"
@@ -251,154 +250,8 @@
             android:layout_height="150dp"
             android:layout_weight="1"
             android:clickable="true"
-            app:srcCompat="@color/colorAccent" />
+            />
     </LinearLayout>
-
-    <View
-        android:id="@+id/win3"
-        android:layout_width="365dp"
-        android:layout_height="7dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_marginBottom="177dp"
-        android:background="#0000ff" />
-
-
-    <!--<ImageView-->
-    <!--android:id="@+id/testo"-->
-    <!--android:layout_width="9dp"-->
-    <!--android:layout_height="7dp"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_marginBottom="174dp"-->
-    <!--android:layout_marginStart="43dp"-->
-    <!--android:src="@drawable/o"-->
-    <!--android:visibility="invisible" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/testx"-->
-    <!--android:layout_width="1dp"-->
-    <!--android:layout_height="1dp"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignTop="@+id/testo"-->
-    <!--android:layout_marginStart="74dp"-->
-    <!--android:src="@drawable/x"-->
-    <!--android:visibility="invisible" />-->
-
-    <View
-        android:id="@+id/ver1"
-        android:layout_width="7dp"
-        android:layout_height="310dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="65dp"
-        android:visibility="gone"
-        android:layout_marginTop="75sp"
-        android:background="#0000ff" />
-
-    <View
-        android:id="@+id/ver2"
-        android:layout_toRightOf="@id/ver1"
-        android:layout_width="7dp"
-        android:layout_height="310dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="75sp"
-        android:visibility="gone"
-        android:background="#0000ff" />
-
-    <View
-        android:id="@+id/ver3"
-        android:layout_toRightOf="@+id/ver2"
-        android:layout_width="7dp"
-        android:layout_height="310dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="120dp"
-        android:visibility="gone"
-        android:layout_marginTop="75sp"
-        android:background="#0000ff" />
-
-
-    <View
-        android:id="@+id/diag02"
-        android:layout_width="140dp"
-        android:layout_height="7dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="176dp"
-        android:visibility="invisible"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="40" />
-
-    <View
-        android:id="@+id/diag01"
-        android:layout_width="160dp"
-        android:layout_height="7dp"
-        android:visibility="invisible"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="224dp"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="40" />
-
-    <View
-        android:id="@+id/diag10"
-        android:layout_width="160dp"
-        android:layout_height="7dp"
-        android:visibility="invisible"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/diag00"
-        android:layout_gravity="center"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="-40" />
-
-    <View
-        android:id="@+id/diag12"
-        android:layout_width="140dp"
-        android:layout_height="7dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/diag02"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="-40" />
-
-    <View
-        android:id="@+id/diag11"
-        android:layout_width="160dp"
-        android:layout_height="7dp"
-        android:visibility="invisible"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="224dp"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="-40" />
-
-    <View
-        android:id="@+id/diag00"
-        android:layout_width="160dp"
-        android:layout_height="7dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:layout_marginTop="127dp"
-        android:background="#0000ff"
-        android:foregroundGravity="center"
-        android:rotation="40" />
-
-
 
     <LinearLayout
         android:visibility="visible"
@@ -416,8 +269,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:layout_marginRight="@dimen/_5sdp"
-            android:textSize="25sp"
             android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp"
             android:text="0"/>
         <TextView
             android:id="@+id/mid"
@@ -427,16 +280,16 @@
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
             android:layout_marginRight="@dimen/_5sdp"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:text=":"/>
         <TextView
             android:id="@+id/seconds"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="25sp"
+            android:textAlignment="center"
+            android:textSize="30sp"
             android:text="00"/>
     </LinearLayout>
 
@@ -449,7 +302,7 @@
         android:layout_height="wrap_content"
         android:text="Moves : 0"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="25sp"/>
+        android:textSize="30sp"/>
 
 
 </RelativeLayout>

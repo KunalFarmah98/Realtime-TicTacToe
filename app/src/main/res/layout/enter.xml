@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     android:orientation="vertical">
 
 
@@ -45,7 +44,7 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_65sdp"
-        android:background="#b322ff"
+        android:background="@color/colorPrimary"
         android:text="Offline : 1 Device, 2 Players"
         android:textColor="#fff2d8"
         android:textSize="@dimen/_13sdp" />
@@ -57,20 +56,18 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_50sdp"
-        android:background="#b322ff"
+        android:background="@color/colorPrimary"
         android:text="Realtime : 2 Devices, 2 Players"
         android:textColor="#fff2d8"
         android:textSize="@dimen/_13sdp" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/info"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:scaleType="fitCenter"
-        android:background="@color/colorAccent"
-        android:src="@drawable/info" />
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@drawable/ic_info_black_24dp" />
 
 
 </LinearLayout>

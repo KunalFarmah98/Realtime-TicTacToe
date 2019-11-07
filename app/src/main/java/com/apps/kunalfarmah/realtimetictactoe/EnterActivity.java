@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.apps.kunalfarmah.realtimetictactoe.Fragments.AboutMe;
@@ -38,7 +39,7 @@ public class EnterActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     Button offline;
     Button online;
-    ImageButton info;
+    ImageView info;
     Menu menu;
     // a variable to check if we are inside teh host or join screen
     public static FrameLayout fragments;
@@ -76,6 +77,8 @@ public class EnterActivity extends AppCompatActivity {
                 if (fragments.getVisibility() == View.GONE || fragments.getVisibility() == View.INVISIBLE)
                     fragments.setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter, about).addToBackStack("about").commit();
+                return true;
+
 
             case R.id.privacy:
                 Uri webpage = Uri.parse("https://realtime-tictactoe.flycricket.io/privacy.html");
@@ -84,6 +87,7 @@ public class EnterActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);

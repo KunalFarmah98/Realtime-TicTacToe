@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorAccent"
+
     android:layout_height="match_parent"
     tools:context="com.apps.kunalfarmah.realtimetictactoe.startActivity">
 
@@ -50,16 +50,15 @@
         android:textSize="30sp" />
 
 
-    <ImageButton
+    <ImageView
         android:id="@+id/gobutton"
-        android:layout_width="149dp"
-        android:layout_height="113dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="54dp"
-        android:background="@color/colorAccent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/go" />
+        app:srcCompat="@drawable/ic_play_circle_outline_black_24dp" />
 
 
 </RelativeLayout>
