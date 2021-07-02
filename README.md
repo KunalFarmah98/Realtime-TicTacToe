@@ -14,12 +14,15 @@
 
 
  <p vspace = "20" align="center" >
-    <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home.png">
-   <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline2.png">
-    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/onlineplay.png" width =190 
+    <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home_light.jpeg">
+   <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline_start.jpeg">
+    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline_light.jpeg" width =190 
   height = 320/>
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/onlineover.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline_dark.jpeg" width =190 
   height = 320/>
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/game_over.jpeg" width =190 
+  height = 320/>
+  
 </p>
 
 
@@ -31,18 +34,19 @@
 
  <p vspace = "20" align="center" >
    <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/login.png">
-    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home.png" width =190 
+    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home_dark.jpeg" width =190 
   height = 320/>
-  <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/setup.png">
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/diff1.png" width =190 
+    <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/start_dark.jpeg">
+
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/host.jpeg" width =190 
   height = 320/>
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/diff2.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/join.jpeg" width =190 
   height = 320/>
-    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/game.png" width =190 
+    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/online_light.jpeg" width =190 
   height = 320/>
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/game.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/online_dark.jpeg" width =190 
   height = 320/>
-   <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/over.png" width =190 
+   <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/game_over.jpeg" width =190 
   height = 320/>
 
 
@@ -54,9 +58,9 @@
 
 * #### 3 competetive modes to test your proficiency of the game challenging your friend to a game of 20 ,15 and 10 seconds.
  <p vspace = "20" align="center" >
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/diff1.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/host.jpeg" width =190 
   height = 320/>
-  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/diff2.png" width =190 
+  <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/join.jpeg" width =190 
   height = 320/>
   </p>
 
