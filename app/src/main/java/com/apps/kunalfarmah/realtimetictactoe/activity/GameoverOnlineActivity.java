@@ -30,6 +30,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
     FirebaseDatabase mdata;
     DatabaseReference closeref;
     DatabaseReference restartref;
+    String token;
 
     TextView time;
     int difficulty;
@@ -45,6 +46,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
         final ImageButton close = findViewById(R.id.close);
 
         difficulty = getIntent().getIntExtra("difficulty",2);
+        token = getIntent().getStringExtra("token");
 
         replay.setOnClickListener(new View.OnClickListener() {
 
@@ -103,8 +105,9 @@ public class GameoverOnlineActivity extends AppCompatActivity {
                                 Intent start = new Intent(getApplicationContext(), OnlineActivity.class);
                                 start.putExtra("isHost", ishost);
                                 start.putExtra("difficulty", difficulty);
+                                start.putExtra("token",token);
                                 startActivity(start);
-                                finish();
+//                                finish();
                                 //finish();
                                 // restartref.setValue(false);
                             } else {
@@ -132,7 +135,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
                         Boolean closed = dataSnapshot.getValue(Boolean.class);
 
                         if (closed) {
-                            ActivityCompat.finishAffinity(GameoverOnlineActivity.this);
+                            startActivity(new Intent(GameoverOnlineActivity.this,EnterActivity.class));
                             finishAffinity();
                         }
                     } catch (Exception e) {

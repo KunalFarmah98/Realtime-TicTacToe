@@ -303,9 +303,10 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                                     gameover.putExtra("Time", min.getText() + " : " + seconds);
                                     gameover.putExtra("Crash", false);
                                     gameover.putExtra("difficulty", difficulty);
+                                    gameover.putExtra("token",token);
                                     isover = true;
-                                    finish();
                                     startActivity(gameover);
+                                    finish();
 
 
                                 }
@@ -736,9 +737,12 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
+                                gameover.putExtra("token",token);
+
 //                                    finish();
 
                                 startActivity(gameover);
+                                finish();
                             }
                         }, 1400);
                     } else if (winner.equalsIgnoreCase("Away")) {
@@ -755,9 +759,11 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
+                                gameover.putExtra("token",token);
 //                                finish();
 
                                 startActivity(gameover);
+                                finish();
                             }
                         }, 1400);
                     } else if (winner.equalsIgnoreCase("Draw")) {
@@ -774,9 +780,12 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
                                 gameover.putExtra("Time", min.getText() + " : " + ((c < 10) ? ("0" + c) : c));
                                 gameover.putExtra("Crash", false);
                                 gameover.putExtra("difficulty", difficulty);
+                                gameover.putExtra("token",token);
+
 //                                finish();
 
                                 startActivity(gameover);
+                                finish();
                             }
                         }, 1400);
                     }
@@ -794,7 +803,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-        ref.addChildEventListener(movelistener);
+        movesRef.addChildEventListener(movelistener);
 
 
     }
@@ -1209,7 +1218,7 @@ public class OnlineActivity extends AppCompatActivity implements View.OnClickLis
 
             // resetting the database as -1 when game finishes
 
-            ref.removeEventListener(movelistener);
+            movesRef.removeEventListener(movelistener);
             iswin.removeValue();
 
 

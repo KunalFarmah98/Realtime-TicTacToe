@@ -24,6 +24,8 @@ import com.apps.kunalfarmah.realtimetictactoe.fragments.HowToPlayFragment;
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -56,6 +58,7 @@ public class EnterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.signout:
+                AuthUI.getInstance().signOut(this);
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(getApplicationContext(), "Signed Out Successfully!!", Toast.LENGTH_SHORT).show();
 

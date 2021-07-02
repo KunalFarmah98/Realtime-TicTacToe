@@ -77,7 +77,6 @@
                 android:id="@+id/d3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorPrimary"
                 android:buttonTint="@color/colorPrimaryDark"
                 android:text="Difficulty 3"/>
 
@@ -100,7 +99,7 @@
             android:layout_below="@+id/Continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
@@ -114,7 +113,7 @@
             android:layout_alignEnd="@+id/hidden1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"

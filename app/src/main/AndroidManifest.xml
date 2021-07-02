@@ -8,11 +8,10 @@
     <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
 
     <application
-        android:allowBackup="true"
         android:isGame="true"
         android:label="Realtime TicTacToe"
-        android:roundIcon="@drawable/logo"
-        android:icon="@drawable/logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
