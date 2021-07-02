@@ -1,12 +1,13 @@
 package com.apps.kunalfarmah.realtimetictactoe.activity;
 
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.kunalfarmah.realtimetictactoe.R;
 
@@ -14,10 +15,13 @@ public class GameoverActivity extends AppCompatActivity {
 
     TextView time;
     String p1,p2;
+    ImageButton close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameover);
+        close = findViewById(R.id.close);
+
 
         time = findViewById(R.id.time);
 
@@ -42,7 +46,6 @@ public class GameoverActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton close = findViewById(R.id.close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +55,11 @@ public class GameoverActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        close.callOnClick();
     }
 
     public void restartActivity(){

@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -31,6 +30,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
     DatabaseReference closeref;
     DatabaseReference restartref;
     String token;
+    ImageButton close;
 
     TextView time;
     int difficulty;
@@ -43,7 +43,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
 
         time = findViewById(R.id.time);
         ImageButton replay = findViewById(R.id.repeat);
-        final ImageButton close = findViewById(R.id.close);
+        close = findViewById(R.id.close);
 
         difficulty = getIntent().getIntExtra("difficulty",2);
         token = getIntent().getStringExtra("token");
@@ -209,6 +209,11 @@ public class GameoverOnlineActivity extends AppCompatActivity {
             //Log.d(LOG_TAG, "No network available!");
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        close.callOnClick();
     }
 }
 

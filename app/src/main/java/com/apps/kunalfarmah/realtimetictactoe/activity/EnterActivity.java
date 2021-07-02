@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,15 +17,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.apps.kunalfarmah.realtimetictactoe.fragments.InterstitialFragment;
 import com.apps.kunalfarmah.realtimetictactoe.fragments.HowToPlayFragment;
 import com.example.kunalfarmah.realtimetictactoe.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -101,7 +98,7 @@ public class EnterActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_enter);
 
-        setSupportActionBar((android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar));
+        setSupportActionBar((androidx.appcompat.widget.Toolbar) findViewById(R.id.my_toolbar));
 
         offline = findViewById(R.id.offline);
         online = findViewById(R.id.online);
