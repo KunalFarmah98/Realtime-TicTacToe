@@ -13,7 +13,7 @@
 * #### Two players can enjoy the game in the same device taking alternate turns.
 
 
- <p vspace = "20" align="center" >
+ <p vspace = "10" align="center" >
     <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home_light.jpeg">
    <img width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline_start.jpeg">
     <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/offline_light.jpeg" width =190 
@@ -37,9 +37,11 @@
     <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/home_dark.jpeg" width =190 
   height = 320/>
     <img  hspace="10" width="190" height="320" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/start_dark.jpeg">
-
   <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/host.jpeg" width =190 
   height = 320/>
+  </p>
+  
+   <p vspace = "20" align="center" >
   <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/join.jpeg" width =190 
   height = 320/>
     <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/online_light.jpeg" width =190 
@@ -48,8 +50,6 @@
   height = 320/>
    <img hspace="10" src="https://github.com/KunalFarmah98/Realtime-TicTacToe/blob/realtime_online/app/src/main/res/raw/game_over.jpeg" width =190 
   height = 320/>
-
-
 </p>
 
 
