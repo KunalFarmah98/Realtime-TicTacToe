@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/over"
@@ -23,35 +22,40 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: 0:00"
-        android:textColor="?android:attr/textColorPrimary"
         android:layout_below="@id/over"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:textSize="@dimen/_25sdp"/>
+        android:text="Time: 0:00"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/_25sdp" />
 
-    <ImageButton
-        android:id="@+id/repeat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="235dp"
-        android:background="@drawable/replay_buttton_clicked"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_replay_black_24dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/close"
-        android:layout_below="@+id/repeat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp"
-        android:background="@drawable/exit_button_clicked"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_close_black_24dp" />
+        <ImageButton
+            android:id="@+id/repeat"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/replay_buttton_clicked"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:src="@drawable/ic_replay_black_24dp"
+            android:tint="@color/colorPrimary" />
+
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/exit_button_clicked"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@color/colorPrimary" />
+
+    </LinearLayout>
 
 </RelativeLayout>

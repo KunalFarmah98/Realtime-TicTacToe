@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.apps.kunalfarmah.realtimetictactoe.Fragments.Interstitial">
+    tools:context="com.apps.kunalfarmah.realtimetictactoe.fragments.InterstitialFragment">
 
 
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:gravity="center"
            android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -33,7 +33,7 @@
             android:layout_marginTop="80dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/head"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginTop="50dp"
             android:id="@+id/join"
             android:textColor="#ffffff"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"

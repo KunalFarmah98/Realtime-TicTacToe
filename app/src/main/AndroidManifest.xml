@@ -18,9 +18,9 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.apps.kunalfarmah.realtimetictactoe.EnterActivity"
+            android:name="com.apps.kunalfarmah.realtimetictactoe.activity.EnterActivity"
             android:screenOrientation="portrait"
-            android:excludeFromRecents="false">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,24 +28,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.apps.kunalfarmah.realtimetictactoe.startActivity"
+            android:name="com.apps.kunalfarmah.realtimetictactoe.activity.StartActivity"
             android:screenOrientation="portrait"
-            android:excludeFromRecents="false"/>
+            android:launchMode="singleInstance"/>
         <activity
-            android:name="com.apps.kunalfarmah.realtimetictactoe.MainActivity_optimised"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="false"/>
+            android:name="com.apps.kunalfarmah.realtimetictactoe.activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name="com.apps.kunalfarmah.realtimetictactoe.gameover"
+            android:name="com.apps.kunalfarmah.realtimetictactoe.activity.GameoverActivity"
             android:screenOrientation="portrait"
-            android:excludeFromRecents="true"/>
+            android:launchMode="singleInstance" />
 
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.onlineActivity"
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.activity.OnlineActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.activity.GameoverOnlineActivity"
             android:screenOrientation="portrait"
-            android:excludeFromRecents="true"/>
-        <activity android:name="com.apps.kunalfarmah.realtimetictactoe.gameover_online"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="true"/>
+            android:launchMode="singleInstance" />
 
     </application>
 

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    tools:context="com.apps.kunalfarmah.realtimetictactoe.startActivity">
+    tools:context="com.apps.kunalfarmah.realtimetictactoe.activity.StartActivity"
+    tools:ignore="MissingDefaultResource">
 
     <TextView
         android:id="@+id/head"
@@ -14,50 +15,55 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:background="@color/colorPrimary"
-        android:paddingBottom="8dp"
+        android:background="@color/colorPrimaryDark"
         android:paddingLeft="8dp"
-        android:paddingRight="8dp"
         android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
         android:text="TIC TAC TOE"
         android:textColor="#f8f8ff"
         android:textSize="50dp" />
 
-    <EditText
-        android:id="@+id/player1"
+    <LinearLayout
+        android:id="@+id/names"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="162dp"
-        android:maxLength="10"
-        android:hint="Player 1 Name"
-        android:textColor="?android:attr/textColorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        android:textSize="30sp" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/player2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="207dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:hint="Player 2 Name"
-        android:maxLength="10"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="30sp" />
+        <EditText
+            android:id="@+id/player1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Player 1 Name"
+            android:maxLength="10"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/player2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Player 2 Name"
+            android:maxLength="10"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp" />
+
+    </LinearLayout>
 
 
     <ImageView
         android:id="@+id/gobutton"
+        android:layout_below="@id/names"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
+        android:layout_marginTop="50dp"
         android:scaleType="fitCenter"
+        android:tint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_play_circle_outline_black_24dp" />
 
 
