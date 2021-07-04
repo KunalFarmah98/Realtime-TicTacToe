@@ -3,7 +3,7 @@ package com.apps.kunalfarmah.realtimetictactoe.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,7 @@ public class GameoverActivity extends AppCompatActivity {
 
     TextView time;
     String p1,p2;
-    ImageButton close;
+    ImageView close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class GameoverActivity extends AppCompatActivity {
         // displaying the time taken in a match
         time.setText("Time : "+ timeval);
 
-        ImageButton replay = findViewById(R.id.repeat);
+        ImageView replay = findViewById(R.id.repeat);
         replay.setOnClickListener(new View.OnClickListener() {
 
             @Override

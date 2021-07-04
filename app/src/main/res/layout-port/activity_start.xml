@@ -63,8 +63,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:scaleType="fitCenter"
-        android:tint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_play_circle_outline_black_24dp" />
+        app:srcCompat="@drawable/baseline_play_circle_outline_black_36dp"
+        app:tint="@color/colorPrimary" />
 
 
 </RelativeLayout>

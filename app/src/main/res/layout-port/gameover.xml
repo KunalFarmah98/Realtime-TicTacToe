@@ -36,25 +36,25 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/repeat"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/replay_buttton_clicked"
             android:scaleType="fitXY"
             android:layout_marginTop="@dimen/_50sdp"
-            android:src="@drawable/ic_replay_black_24dp"
-            android:tint="@color/colorPrimary" />
+            app:srcCompat="@drawable/ic_replay_black_24dp"
+            app:tint="@color/colorPrimary" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/close"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="@dimen/_50sdp"
             android:background="@drawable/exit_button_clicked"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_close_black_24dp"
-            android:tint="@color/colorPrimary" />
+            app:srcCompat="@drawable/ic_close_black_24dp"
+            app:tint="@color/colorPrimary" />
 
     </LinearLayout>
 

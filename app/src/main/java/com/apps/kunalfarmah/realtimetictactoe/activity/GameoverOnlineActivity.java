@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +30,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
     DatabaseReference closeref;
     DatabaseReference restartref;
     String token;
-    ImageButton close;
+    ImageView close;
 
     TextView time;
     int difficulty;
@@ -42,7 +42,7 @@ public class GameoverOnlineActivity extends AppCompatActivity {
         OnlineActivity.isover = true;
 
         time = findViewById(R.id.time);
-        ImageButton replay = findViewById(R.id.repeat);
+        ImageView replay = findViewById(R.id.repeat);
         close = findViewById(R.id.close);
 
         difficulty = getIntent().getIntExtra("difficulty",2);

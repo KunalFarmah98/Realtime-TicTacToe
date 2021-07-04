@@ -40,7 +40,7 @@ public class EnterActivity extends AppCompatActivity {
     ImageView info;
     Menu menu;
     // a variable to check if we are inside teh host or join screen
-    public static FrameLayout fragments;
+    public FrameLayout fragments;
 
     static String User;
 
@@ -102,7 +102,7 @@ public class EnterActivity extends AppCompatActivity {
 
         offline = findViewById(R.id.offline);
         online = findViewById(R.id.online);
-        info = findViewById(R.id.info);
+        info = findViewById(R.id.how_to_play);
         fragments = findViewById(R.id.fragment_containter);
         //fragment1 = findViewById(R.id.how_to_play);
 
@@ -153,6 +153,7 @@ public class EnterActivity extends AppCompatActivity {
                                         .createSignInIntentBuilder()
                                         .setAvailableProviders(providers)
                                         .setLogo(R.drawable.logo)
+                                        .setIsSmartLockEnabled(false)
                                         .setTheme(R.style.AppTheme)
                                         .build(),
                                 RC_SIGN_IN);
