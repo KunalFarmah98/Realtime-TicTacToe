@@ -79,11 +79,9 @@ public class EnterActivity extends AppCompatActivity {
 
 
             case R.id.privacy:
-                Uri webpage = Uri.parse("https://www.kunalfarmah.com/contact-me/");
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                about = new Intent(Intent.ACTION_VIEW);
+                about.setData(Uri.parse("https://www.kunalfarmah.com/contact-me/"));
+                startActivity(about);
                 return true;
 
 
