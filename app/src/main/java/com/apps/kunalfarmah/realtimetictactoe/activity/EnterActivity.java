@@ -73,13 +73,13 @@ public class EnterActivity extends AppCompatActivity {
             case R.id.about_dev:
 
                 Intent about = new Intent(Intent.ACTION_VIEW);
-                about.setData(Uri.parse("https://kunal-farmah.jimdosite.com"));
+                about.setData(Uri.parse("https://www.kunalfarmah.com/"));
                 startActivity(about);
                 return true;
 
 
             case R.id.privacy:
-                Uri webpage = Uri.parse("https://realtime-tictactoe.flycricket.io/privacy.html");
+                Uri webpage = Uri.parse("https://www.kunalfarmah.com/contact-me/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
